@@ -1,0 +1,93 @@
+{
+  "meta": {
+    "title": "Sailing Billabong - Kalandos Vitorlázás és Családbarát Túrák",
+    "description": "Élj át felejthetetlen vitorlás kalandokat a Sailing Billabong-gal. Családbarát túrák, profi legénység és lélegzetelállító úticélok várnak rád.",
+    "keywords": "vitorlázás, kalandturizmus, családi vitorlázás, hajótúrák, vitorlás nyaralás, karibi vitorlázás"
+  },
+  "nav": {
+    "home": "Főoldal",
+    "about": "Rólunk és Galéria",
+    "tours": "Túrák",
+    "contact": "Kapcsolat és Foglalás",
+    "blog": "Blog"
+  },
+  "hero": {
+    "title": "Kalandos Vitorlázás a Billabong-gal",
+    "subtitle": "Családbarát vitorlás kalandok a paradicsom vizein",
+    "description": "Fedezd fel az érintetlen szigeteket, kristálytiszta vizeket és felejthetetlen élményeket kényelmes vitorlás jachtunkon.",
+    "cta": "Foglald le Kalandomat"
+  },
+  "features": {
+    "title": "Miért válaszd a Sailing Billabong-ot?",
+    "items": [
+      {
+        "title": "Kalandturizmus",
+        "description": "Fedezz fel rejtett öblöket, búvárkodj érintetlen zátonyokon, és találj meg olyan strandokat, ahova csak hajóval lehet eljutni.",
+        "icon": "🏝️"
+      },
+      {
+        "title": "Családbarát",
+        "description": "Biztonságos és élvezetes élmények minden korosztály számára. Legénységünk specialitása, hogy a vitorlázást elérhetővé és szórakoztatóvá teszi családok számára.",
+        "icon": "👨‍👩‍👧‍👦"
+      },
+      {
+        "title": "Profi Legénység",
+        "description": "Tapasztalt kapitányok és legénységi tagok biztosítják biztonságodat, miközben megosztják tudásukat a helyi vizekről és tengeri életről.",
+        "icon": "⚓"
+      },
+      {
+        "title": "Kényelmes Jacht",
+        "description": "Modern vitorlás jacht minden kényelmi szolgáltatással, ami szükséges egy komfortos többnapos vízparti kalandhoz.",
+        "icon": "⛵"
+      }
+    ]
+  },
+  "about_preview": {
+    "title": "A Sailing Billabong-ról",
+    "description": "A vitorlázás iránti szenvedélyünk és az óceán szeretete vezet minket abban, hogy kivételes élményeket teremtsünk kalandorok és családok számára egyaránt. Évek tapasztalatával ezeken a gyönyörű vizeken, ismerjük a legjobb helyeket úszásra, búvárkodásra és egyszerűen a tengeri élet nyugalmának élvezetére.",
+    "cta": "Tudj meg többet rólunk"
+  },
+  "tours_preview": {
+    "title": "Vitorlás Túráink",
+    "description": "Fél napos kalandoktól egyhetes expedíciókig, olyan túrákat kínálunk, amelyek illeszkednek az időbeosztásodhoz és kalandvágyhoz.",
+    "tours": [
+      {
+        "name": "Szigetugráló Kaland",
+        "duration": "3-5 nap",
+        "description": "Látogass meg több szigetet, búvárkodj érintetlen vizekben, és élvezd a strand barbecue-kat."
+      },
+      {
+        "name": "Családi Felfedező Túra",
+        "duration": "1-2 nap",
+        "description": "Tökéletes gyermekes családoknak, nyugodt vizekkel és gyerekbarát tevékenységekkel."
+      },
+      {
+        "name": "Hosszú Expedíció",
+        "duration": "7-14 nap",
+        "description": "A végső vitorlás kaland távoli szigetekkel és exkluzív horgonyzóhelyekkel."
+      }
+    ],
+    "cta": "Összes Túra Megtekintése"
+  },
+  "testimonials": {
+    "title": "Mit mondanak vendégeink",
+    "items": [
+      {
+        "text": "Teljesen hihetetlen élmény volt! A legénység profi volt, a hajó kényelmes, és az úticélok lélegzetelállítóak. A gyerekeink imádták minden percét.",
+        "author": "Sarah és Mike Johnson",
+        "location": "Toronto, Kanada"
+      },
+      {
+        "text": "Sok vitorlás túrán voltunk már, de a Sailing Billabong minden várakozásunkat felülmúlta. A részletekre való odafigyelés és a helyi terület ismerete felejthetetlen utazássá tette ezt a túrát.",
+        "author": "Emma Thompson",
+        "location": "London, UK"
+      }
+    ]
+  },
+  "cta_section": {
+    "title": "Készen állsz a következő kalandra?",
+    "description": "Vedd fel velünk a kapcsolatot még ma, hogy megtervezhessük a tökéletes vitorlás nyaralásodat. Akár kalandot, akár pihenést keresel, olyan élményt alkotunk, amely csak rád szabott.",
+    "primary_cta": "Foglalj Most",
+    "secondary_cta": "További Infó"
+  }
+}

@@ -1,0 +1,93 @@
+{
+  "meta": {
+    "title": "Sailing Billabong - Adventure Sailing & Family-Friendly Tours",
+    "description": "Experience unforgettable sailing adventures with Sailing Billabong. Family-friendly tours, professional crew, and breathtaking destinations await you.",
+    "keywords": "sailing, adventure tourism, family sailing, boat tours, sailing holidays, Caribbean sailing"
+  },
+  "nav": {
+    "home": "Home",
+    "about": "About & Gallery",
+    "tours": "Tours",
+    "contact": "Contact & Booking",
+    "blog": "Blog"
+  },
+  "hero": {
+    "title": "Adventure Sailing with Billabong",
+    "subtitle": "Family-friendly sailing adventures in paradise waters",
+    "description": "Discover pristine islands, crystal-clear waters, and unforgettable memories aboard our comfortable sailing yacht.",
+    "cta": "Book Your Adventure"
+  },
+  "features": {
+    "title": "Why Choose Sailing Billabong?",
+    "items": [
+      {
+        "title": "Adventure Tourism",
+        "description": "Explore hidden coves, snorkel in pristine reefs, and discover untouched beaches that can only be reached by boat.",
+        "icon": "🏝️"
+      },
+      {
+        "title": "Family Friendly",
+        "description": "Safe and enjoyable experiences for all ages. Our crew specializes in making sailing accessible and fun for families.",
+        "icon": "👨‍👩‍👧‍👦"
+      },
+      {
+        "title": "Professional Crew",
+        "description": "Experienced captains and crew members ensure your safety while sharing their knowledge of local waters and marine life.",
+        "icon": "⚓"
+      },
+      {
+        "title": "Comfortable Yacht",
+        "description": "Modern sailing yacht with all amenities needed for a comfortable multi-day adventure on the water.",
+        "icon": "⛵"
+      }
+    ]
+  },
+  "about_preview": {
+    "title": "About Sailing Billabong",
+    "description": "Our passion for sailing and love of the ocean drives us to create exceptional experiences for adventurers and families alike. With years of experience navigating these beautiful waters, we know the best spots for swimming, snorkeling, and simply enjoying the tranquility of life at sea.",
+    "cta": "Learn More About Us"
+  },
+  "tours_preview": {
+    "title": "Our Sailing Tours",
+    "description": "From half-day adventures to week-long expeditions, we offer tours designed to match your schedule and adventure level.",
+    "tours": [
+      {
+        "name": "Island Hopping Adventure",
+        "duration": "3-5 days",
+        "description": "Visit multiple islands, snorkel in pristine waters, and enjoy beach barbecues."
+      },
+      {
+        "name": "Family Discovery Tour",
+        "duration": "1-2 days",
+        "description": "Perfect for families with children, featuring calm waters and kid-friendly activities."
+      },
+      {
+        "name": "Extended Expedition",
+        "duration": "7-14 days",
+        "description": "The ultimate sailing adventure covering remote islands and exclusive anchorages."
+      }
+    ],
+    "cta": "View All Tours"
+  },
+  "testimonials": {
+    "title": "What Our Guests Say",
+    "items": [
+      {
+        "text": "An absolutely incredible experience! The crew was professional, the boat was comfortable, and the destinations were breathtaking. Our kids loved every minute of it.",
+        "author": "Sarah & Mike Johnson",
+        "location": "Toronto, Canada"
+      },
+      {
+        "text": "We've been on many sailing trips, but Sailing Billabong exceeded all our expectations. The attention to detail and knowledge of the local area made this trip unforgettable.",
+        "author": "Emma Thompson",
+        "location": "London, UK"
+      }
+    ]
+  },
+  "cta_section": {
+    "title": "Ready for Your Next Adventure?",
+    "description": "Contact us today to plan your perfect sailing holiday. Whether you're looking for adventure or relaxation, we'll create an experience tailored just for you.",
+    "primary_cta": "Book Now",
+    "secondary_cta": "Get More Info"
+  }
+}
