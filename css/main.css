@@ -248,7 +248,12 @@ p {
 
 /* ===== MAIN CONTENT ===== */
 .main {
-  padding-top: 80px; /* Account for fixed header */
+  /* No padding-top for hero - header floats over hero */
+}
+
+/* Add padding only to sections after hero */
+.section:not(.hero) {
+  padding-top: 4rem;
 }
 
 /* ===== MODERN RESPONSIVE HERO SECTION ===== */
@@ -260,6 +265,8 @@ p {
   text-align: center;
   position: relative;
   overflow: hidden;
+  margin: 0;
+  padding: 0;
 }
 
 .hero-bg {

@@ -219,6 +219,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+
 // Utility function for loading content dynamically (for future use)
 async function loadContent(contentFile) {
     try {
