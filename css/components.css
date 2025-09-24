@@ -409,8 +409,8 @@
 /* ===== ENHANCED FOOTER STYLES ===== */
 .footer {
   background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
-  color: #e0e0e0;
-  margin-top: 4rem;
+  color: var(--grey-medium);
+  margin-top: 0; /* Remove gap between sections */
   border-top: 3px solid var(--navy-primary);
 }
 
@@ -442,7 +442,7 @@
 }
 
 .footer-brand-text h3 {
-  color: #ffffff;
+  color: var(--text-light);
   font-size: 1.4rem;
   font-weight: 600;
   margin: 0;
@@ -457,7 +457,7 @@
 }
 
 .footer-description {
-  color: #b0b0b0;
+  color: var(--grey-medium);
   line-height: 1.6;
   margin-bottom: 1.5rem;
   font-size: 0.9rem;
@@ -485,7 +485,7 @@
 }
 
 .footer-heading {
-  color: #ffffff;
+  color: var(--text-light);
   font-size: 1.1rem;
   font-weight: 600;
   margin-bottom: 1.2rem;
@@ -515,7 +515,7 @@
 }
 
 .footer-links a {
-  color: #b0b0b0;
+  color: var(--grey-medium);
   text-decoration: none;
   font-size: 0.9rem;
   transition: all 0.3s ease;
@@ -548,7 +548,7 @@
 }
 
 .contact-item a {
-  color: #b0b0b0;
+  color: var(--grey-medium);
   text-decoration: none;
   transition: color 0.3s ease;
 }
@@ -558,12 +558,12 @@
 }
 
 .contact-item span {
-  color: #b0b0b0;
+  color: var(--grey-medium);
 }
 
 /* Footer Social */
 .footer-social h5 {
-  color: #ffffff;
+  color: var(--text-light);
   font-size: 0.95rem;
   font-weight: 600;
   margin-bottom: 0.8rem;
@@ -576,7 +576,7 @@
 }
 
 .social-link {
-  color: #b0b0b0;
+  color: var(--grey-medium);
   font-size: 1.3rem;
   text-decoration: none;
   transition: all 0.3s ease;
@@ -603,6 +603,11 @@
   padding: 1.5rem 0;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   background: rgba(0, 0, 0, 0.3);
+  /* Ensure background extends to full width */
+  margin-left: calc(-50vw + 50%);
+  margin-right: calc(-50vw + 50%);
+  padding-left: calc(50vw - 50%);
+  padding-right: calc(50vw - 50%);
 }
 
 .footer-bottom-content {
@@ -615,8 +620,9 @@
 }
 
 .footer-bottom-content p {
-  color: #888;
+  color: var(--grey-medium);
   margin: 0;
+  opacity: 0.8;
 }
 
 .footer-legal {
@@ -626,9 +632,10 @@
 }
 
 .footer-legal a {
-  color: #888;
+  color: var(--grey-medium);
   text-decoration: none;
   transition: color 0.3s ease;
+  opacity: 0.8;
 }
 
 .footer-legal a:hover {
@@ -636,7 +643,8 @@
 }
 
 .footer-legal span {
-  color: #666;
+  color: var(--grey-medium);
+  opacity: 0.6;
 }
 
 /* Responsive Design */
