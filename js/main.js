@@ -83,18 +83,56 @@ function populateHeaderData() {
         // Populate navigation items
         navData.main_nav.forEach(item => {
             // Desktop navigation
-            const desktopLink = document.createElement('a');
-            desktopLink.href = item.url;
-            desktopLink.id = `nav-${item.id}`;
-            desktopLink.textContent = item.label;
-            desktopNav.appendChild(desktopLink);
+            if (item.dropdown) {
+                // Create dropdown container
+                const dropdownContainer = document.createElement('div');
+                dropdownContainer.className = 'nav-dropdown';
+                
+                const mainLink = document.createElement('a');
+                mainLink.href = item.url;
+                mainLink.id = `nav-${item.id}`;
+                mainLink.textContent = item.label + ' ▼';
+                mainLink.className = 'nav-dropdown-toggle';
+                
+                const dropdownMenu = document.createElement('div');
+                dropdownMenu.className = 'nav-dropdown-menu';
+                
+                item.dropdown.forEach(dropdownItem => {
+                    const dropdownLink = document.createElement('a');
+                    dropdownLink.href = dropdownItem.url;
+                    dropdownLink.textContent = dropdownItem.label;
+                    dropdownMenu.appendChild(dropdownLink);
+                });
+                
+                dropdownContainer.appendChild(mainLink);
+                dropdownContainer.appendChild(dropdownMenu);
+                desktopNav.appendChild(dropdownContainer);
+            } else {
+                const desktopLink = document.createElement('a');
+                desktopLink.href = item.url;
+                desktopLink.id = `nav-${item.id}`;
+                desktopLink.textContent = item.label;
+                desktopNav.appendChild(desktopLink);
+            }
             
-            // Mobile navigation
+            // Mobile navigation (simplified - no dropdown for mobile)
             const mobileLink = document.createElement('a');
             mobileLink.href = item.url;
             mobileLink.id = `mobile-nav-${item.id}`;
             mobileLink.textContent = item.label;
             mobileNav.appendChild(mobileLink);
+            
+            // Add dropdown items to mobile menu
+            if (item.dropdown) {
+                item.dropdown.forEach(dropdownItem => {
+                    const mobileDropdownLink = document.createElement('a');
+                    mobileDropdownLink.href = dropdownItem.url;
+                    mobileDropdownLink.textContent = `• ${dropdownItem.label}`;
+                    mobileDropdownLink.style.paddingLeft = '2rem';
+                    mobileDropdownLink.style.fontSize = '0.9rem';
+                    mobileNav.appendChild(mobileDropdownLink);
+                });
+            }
         });
     }
     

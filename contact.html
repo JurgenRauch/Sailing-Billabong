@@ -3,12 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us - Sailing Billabong</title>
+    <title>Contact & Booking - Sailing Billabong | Caribbean Sailing Adventures</title>
+    <meta name="description" content="Contact Sailing Billabong for your Caribbean sailing adventure. Professional crew, family-friendly tours, and custom charters. Book your sailing trip today!">
+    <meta name="keywords" content="contact sailing billabong, book sailing tour, caribbean sailing contact, sailing adventure booking, family sailing tours">
+    
+    <!-- Hreflang for SEO -->
+    <link rel="alternate" hreflang="en" href="https://www.sailingbillabong.com/contact">
+    <link rel="alternate" hreflang="hu" href="https://www.sailingbillabong.com/hu/contact">
+    <link rel="alternate" hreflang="x-default" href="https://www.sailingbillabong.com/contact">
     
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="images/favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+    
+    <!-- Open Graph for social sharing -->
+    <meta property="og:title" content="Contact & Booking - Sailing Billabong">
+    <meta property="og:description" content="Contact Sailing Billabong for your Caribbean sailing adventure. Professional crew, family-friendly tours, and custom charters.">
+    <meta property="og:image" content="images/hero/homepage2k.png">
+    <meta property="og:url" content="https://www.sailingbillabong.com/contact">
+    <meta property="og:type" content="website">
     
     <!-- CSS -->
     <link rel="stylesheet" href="css/main.css">
@@ -21,87 +35,141 @@
     <!-- Dynamic Header -->
     <div id="header"></div>
 
-    <main>
+    <main class="main">
         <!-- Contact Hero Section -->
-        <section class="hero-section" style="background: linear-gradient(135deg, var(--navy-primary) 0%, var(--blue-primary) 100%); color: var(--text-light); padding: 4rem 0; text-align: center;">
+        <section class="contact-hero">
+            <div class="contact-hero-bg">
+                <picture>
+                    <source media="(min-width: 1200px)" srcset="images/hero/homepage4k.png">
+                    <source media="(min-width: 768px)" srcset="images/hero/homepage2k.png">
+                    <source srcset="images/hero/homepagehd.png">
+                    <img src="images/hero/homepagehd.png" alt="Contact Sailing Billabong" class="contact-hero-image" loading="eager">
+                </picture>
+                <div class="contact-hero-overlay"></div>
+            </div>
             <div class="container">
-                <h1 style="font-size: 3rem; margin-bottom: 1rem; font-weight: 700;">Contact Us</h1>
-                <p style="font-size: 1.2rem; margin-bottom: 2rem; opacity: 0.9;">Get in touch for your next sailing adventure</p>
+                <div class="contact-hero-content">
+                    <h1>Contact & Booking</h1>
+                    <p>Ready to embark on your sailing adventure? Get in touch with our team to plan your perfect trip.</p>
+                    <div class="contact-hero-badges">
+                        <span class="hero-badge">📞 Quick Response</span>
+                        <span class="hero-badge">⚓ Expert Advice</span>
+                        <span class="hero-badge">🗓️ Flexible Booking</span>
+                    </div>
+                </div>
             </div>
         </section>
 
         <!-- Contact Form Section -->
-        <section class="contact-section" style="padding: 4rem 0;">
+        <section class="section contact-section">
             <div class="container">
-                <div class="contact-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start;">
+                <div class="contact-grid">
                     
                     <!-- Contact Form -->
                     <div class="contact-form-container">
-                        <h2 style="color: var(--navy-primary); margin-bottom: 2rem;">Send us a Message</h2>
+                        <h2 id="contact-form-heading">Send us a Message</h2>
+                        <p class="contact-form-description">Fill out the form below and we'll get back to you within 24 hours to discuss your sailing adventure.</p>
                         
-                        <form id="contact-form" class="contact-form" style="display: flex; flex-direction: column; gap: 1.5rem;">
+                        <form id="contact-form" class="contact-form">
                             <div class="form-group">
-                                <label for="from_name" style="display: block; margin-bottom: 0.5rem; color: var(--text-dark); font-weight: 500;">Name *</label>
-                                <input type="text" id="from_name" name="from_name" required 
-                                       style="width: 100%; padding: 1rem; border: 2px solid var(--grey-light); border-radius: 8px; font-size: 1rem;">
+                                <label for="from_name">Name *</label>
+                                <input type="text" id="from_name" name="from_name" required placeholder="Your full name">
                             </div>
                             
                             <div class="form-group">
-                                <label for="from_email" style="display: block; margin-bottom: 0.5rem; color: var(--text-dark); font-weight: 500;">Email *</label>
-                                <input type="email" id="from_email" name="from_email" required 
-                                       style="width: 100%; padding: 1rem; border: 2px solid var(--grey-light); border-radius: 8px; font-size: 1rem;">
+                                <label for="from_email">Email *</label>
+                                <input type="email" id="from_email" name="from_email" required placeholder="your.email@example.com">
                             </div>
                             
                             <div class="form-group">
-                                <label for="subject" style="display: block; margin-bottom: 0.5rem; color: var(--text-dark); font-weight: 500;">Subject</label>
-                                <input type="text" id="subject" name="subject" 
-                                       style="width: 100%; padding: 1rem; border: 2px solid var(--grey-light); border-radius: 8px; font-size: 1rem;">
+                                <label for="message">Message *</label>
+                                <textarea id="message" name="message" rows="8" required placeholder="Tell us about your ideal sailing adventure, preferred dates, group size, or any questions you have..."></textarea>
                             </div>
                             
-                            <div class="form-group">
-                                <label for="message" style="display: block; margin-bottom: 0.5rem; color: var(--text-dark); font-weight: 500;">Message *</label>
-                                <textarea id="message" name="message" rows="6" required 
-                                          style="width: 100%; padding: 1rem; border: 2px solid var(--grey-light); border-radius: 8px; font-size: 1rem; resize: vertical;"></textarea>
-                            </div>
-                            
-                            <button type="submit" id="submit-btn" 
-                                    style="background: var(--blue-primary, #007bff); color: white; padding: 1rem 2rem; border: none; border-radius: 8px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: background-color 0.3s ease; display: block; width: 100%;">
-                                Send Message
+                            <button type="submit" id="submit-btn" class="cta-btn contact-submit-btn">
+                                <span class="btn-text">Send Message</span>
+                                <span class="btn-icon">📧</span>
                             </button>
                         </form>
                         
                         <!-- Status Messages -->
-                        <div id="form-status" style="margin-top: 1rem; padding: 1rem; border-radius: 8px; display: none;"></div>
+                        <div id="form-status" class="form-status"></div>
                     </div>
                     
                     <!-- Contact Information -->
-                    <div class="contact-info">
-                        <h2 style="color: var(--navy-primary); margin-bottom: 2rem;">Get in Touch</h2>
-                        
-                        <div class="contact-details" style="display: flex; flex-direction: column; gap: 2rem;">
+                    <div class="contact-info-container">
+                        <div class="contact-info-card-single">
+                            <h2>Get in Touch</h2>
+                            
                             <div class="contact-item">
-                                <h3 style="color: var(--blue-primary); margin-bottom: 0.5rem;">Email</h3>
-                                <p data-contact="email">info@sailingbillabong.com</p>
+                                <span class="contact-icon">📧</span>
+                                <div class="contact-details">
+                                    <strong>Email</strong>
+                                    <a href="mailto:info@sailingbillabong.com" data-contact="email">info@sailingbillabong.com</a>
+                                </div>
                             </div>
                             
                             <div class="contact-item">
-                                <h3 style="color: var(--blue-primary); margin-bottom: 0.5rem;">Phone</h3>
-                                <p data-contact="phone">+1 (555) 123-4567</p>
+                                <span class="contact-icon">📞</span>
+                                <div class="contact-details">
+                                    <strong>Phone</strong>
+                                    <a href="tel:+36XXXXXXXX" data-contact="phone">+36 (XX) XXX-XXXX</a>
+                                </div>
                             </div>
                             
                             <div class="contact-item">
-                                <h3 style="color: var(--blue-primary); margin-bottom: 0.5rem;">Business Hours</h3>
-                                <p>Monday - Friday: 9:00 AM - 6:00 PM</p>
-                                <p>Weekend tours available by appointment</p>
+                                <span class="contact-icon">⚓</span>
+                                <div class="contact-details">
+                                    <strong>Home Harbor</strong>
+                                    <span>Aruba (Currently)</span>
+                                </div>
                             </div>
                             
                             <div class="contact-item">
-                                <h3 style="color: var(--blue-primary); margin-bottom: 0.5rem;">Follow Us</h3>
-                                <div class="social-links" style="display: flex; gap: 1rem;">
-                                    <!-- Social links will be populated dynamically -->
+                                <span class="contact-icon">🏢</span>
+                                <div class="contact-details">
+                                    <strong>Headquarters</strong>
+                                    <span>Hungary</span>
+                                </div>
+                            </div>
+                            
+                            <div class="contact-item">
+                                <span class="contact-icon">🕒</span>
+                                <div class="contact-details">
+                                    <strong>Hours</strong>
+                                    <div class="hours-info">
+                                        <span>8AM - 6PM CET</span>
+                                        <span class="hours-alt">2AM - 12PM EST</span>
+                                        <span class="hours-alt">7AM - 5PM UTC</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="section contact-faq" style="background: var(--light-blue);">
+            <div class="container">
+                <h2 style="text-align: center; margin-bottom: 3rem;">Frequently Asked Questions</h2>
+                <div class="faq-grid">
+                    <div class="faq-item">
+                        <h3>How far in advance should I book?</h3>
+                        <p>We recommend booking 2-4 weeks in advance, especially during peak season (December-April). However, we often have last-minute availability.</p>
+                    </div>
+                    <div class="faq-item">
+                        <h3>What's included in the tour price?</h3>
+                        <p>All tours include professional crew, safety equipment, snorkeling gear, refreshments, and lunch on full-day trips. Specific inclusions vary by tour.</p>
+                    </div>
+                    <div class="faq-item">
+                        <h3>Do you offer private charters?</h3>
+                        <p>Yes! We offer custom private charters for groups of 2-12 people. Perfect for special occasions, corporate events, or intimate family adventures.</p>
+                    </div>
+                    <div class="faq-item">
+                        <h3>What if the weather is bad?</h3>
+                        <p>Safety is our priority. If weather conditions are unsafe, we'll reschedule your trip or provide a full refund. We monitor conditions closely.</p>
                     </div>
                 </div>
             </div>

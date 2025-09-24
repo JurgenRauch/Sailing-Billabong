@@ -8,28 +8,40 @@
         "active_pages": ["index.html", ""]
       },
       {
-        "id": "about",
-        "label": "About & Gallery",
-        "url": "about.html",
-        "active_pages": ["about.html"]
-      },
-      {
-        "id": "tours",
-        "label": "Tours",
-        "url": "tours.html",
-        "active_pages": ["tours.html"]
-      },
-      {
-        "id": "contact",
-        "label": "Contact & Booking",
+        "id": "booking",
+        "label": "Booking",
         "url": "contact.html",
-        "active_pages": ["contact.html"]
+        "active_pages": ["contact.html"],
+        "dropdown": [
+          {
+            "label": "Contact",
+            "url": "contact.html"
+          },
+          {
+            "label": "Booking",
+            "url": "contact.html"
+          }
+        ]
       },
       {
-        "id": "blog",
-        "label": "Blog",
-        "url": "blog.html",
-        "active_pages": ["blog.html"]
+        "id": "about",
+        "label": "About Us",
+        "url": "about.html",
+        "active_pages": ["about.html", "tours.html", "gallery.html"],
+        "dropdown": [
+          {
+            "label": "Billabong",
+            "url": "about.html"
+          },
+          {
+            "label": "Tours",
+            "url": "tours.html"
+          },
+          {
+            "label": "Gallery",
+            "url": "gallery.html"
+          }
+        ]
       }
     ],
     "footer_nav": [
@@ -68,28 +80,40 @@
         "active_pages": ["index.html", ""]
       },
       {
-        "id": "about",
-        "label": "Rólunk és Galéria",
-        "url": "about.html",
-        "active_pages": ["about.html"]
-      },
-      {
-        "id": "tours",
-        "label": "Túrák",
-        "url": "tours.html",
-        "active_pages": ["tours.html"]
-      },
-      {
-        "id": "contact",
-        "label": "Kapcsolat és Foglalás",
+        "id": "booking",
+        "label": "Foglalás",
         "url": "contact.html",
-        "active_pages": ["contact.html"]
+        "active_pages": ["contact.html"],
+        "dropdown": [
+          {
+            "label": "Kapcsolat",
+            "url": "contact.html"
+          },
+          {
+            "label": "Foglalás",
+            "url": "contact.html"
+          }
+        ]
       },
       {
-        "id": "blog",
-        "label": "Blog",
-        "url": "blog.html",
-        "active_pages": ["blog.html"]
+        "id": "about",
+        "label": "Rólunk",
+        "url": "about.html",
+        "active_pages": ["about.html", "tours.html", "gallery.html"],
+        "dropdown": [
+          {
+            "label": "Billabong",
+            "url": "about.html"
+          },
+          {
+            "label": "Túrák",
+            "url": "tours.html"
+          },
+          {
+            "label": "Galéria",
+            "url": "gallery.html"
+          }
+        ]
       }
     ],
     "footer_nav": [

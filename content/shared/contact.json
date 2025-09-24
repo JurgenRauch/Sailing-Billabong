@@ -1,9 +1,11 @@
 {
   "contact": {
     "email": "info@sailingbillabong.com",
-    "phone": "+1 (555) 123-4567",
+    "phone": "+36 (XX) XXX-XXXX",
     "privacy_email": "privacy@sailingbillabong.com",
     "address": {
+      "home_harbor": "Aruba (Currently)",
+      "headquarters": "Hungary",
       "street": "",
       "city": "",
       "country": "",
@@ -23,8 +25,12 @@
     }
   },
   "business_hours": {
-    "timezone": "UTC",
-    "office_hours": "9:00 AM - 6:00 PM",
-    "days": "Monday - Friday"
+    "timezone_cet": "CET (Central European Time)",
+    "timezone_est": "EST (Eastern Standard Time)",
+    "timezone_utc": "UTC (Coordinated Universal Time)",
+    "office_hours_cet": "8:00 AM - 6:00 PM CET",
+    "office_hours_est": "2:00 AM - 12:00 PM EST",
+    "office_hours_utc": "7:00 AM - 5:00 PM UTC",
+    "days": "Daily"
   }
 }
