@@ -18,6 +18,8 @@
     "cta": "Book Your Adventure"
   },
   "features": {
+    "id": "features",
+    "header_id": "why-choose-us",
     "title": "Why Choose Sailing Billabong?",
     "items": [
       {
@@ -43,11 +45,15 @@
     ]
   },
   "about_preview": {
+    "id": "about",
+    "header_id": "about-us",
     "title": "About Sailing Billabong",
     "description": "Our passion for sailing and love of the ocean drives us to create exceptional experiences for adventurers and families alike. With years of experience navigating these beautiful waters, we know the best spots for swimming, snorkeling, and simply enjoying the tranquility of life at sea.",
     "cta": "Learn More About Us"
   },
   "tours_preview": {
+    "id": "tours",
+    "header_id": "our-tours",
     "title": "Our Sailing Tours",
     "description": "From half-day adventures to week-long expeditions, we offer tours designed to match your schedule and adventure level.",
     "tours": [
@@ -70,6 +76,8 @@
     "cta": "View All Tours"
   },
   "testimonials": {
+    "id": "testimonials",
+    "header_id": "guest-reviews",
     "title": "What Our Guests Say",
     "items": [
       {
@@ -85,6 +93,8 @@
     ]
   },
   "cta_section": {
+    "id": "book-now",
+    "header_id": "ready-adventure",
     "title": "Ready for Your Next Adventure?",
     "description": "Contact us today to plan your perfect sailing holiday. Whether you're looking for adventure or relaxation, we'll create an experience tailored just for you.",
     "primary_cta": "Book Now",

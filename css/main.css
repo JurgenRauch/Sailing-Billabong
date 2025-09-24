@@ -71,6 +71,7 @@ h2 {
   margin-bottom: 0.75rem;
   line-height: 1.3;
   letter-spacing: -0.02em;
+  position: relative;
 }
 
 h3 {
@@ -79,6 +80,7 @@ h3 {
   color: var(--navy-primary);
   margin-bottom: 0.5rem;
   line-height: 1.4;
+  position: relative;
 }
 
 h4 {
@@ -87,6 +89,31 @@ h4 {
   color: var(--text-body);
   margin-bottom: 0.5rem;
   line-height: 1.4;
+}
+
+/* ===== LINKABLE HEADERS ===== */
+h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {
+  scroll-margin-top: 100px; /* Account for fixed header */
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+h1[id]:hover, h2[id]:hover, h3[id]:hover, h4[id]:hover, h5[id]:hover, h6[id]:hover {
+  color: var(--navy-primary);
+}
+
+/* Link icon that appears on hover */
+h1[id]:hover::after, h2[id]:hover::after, h3[id]:hover::after {
+  content: "🔗";
+  font-size: 0.7em;
+  margin-left: 0.5rem;
+  opacity: 0.6;
+  transition: opacity 0.3s ease;
+}
+
+/* Smooth scroll behavior for anchor links */
+html {
+  scroll-behavior: smooth;
 }
 
 p {

@@ -1,0 +1,38 @@
+{
+  "site": {
+    "name": "Sailing Billabong",
+    "tagline": "Adventure Sailing & Family-Friendly Tours",
+    "domain": "sailingbillabong.com",
+    "url": "https://www.sailingbillabong.com",
+    "logo": "images/logo.png",
+    "favicon": "images/favicon.ico",
+    "default_language": "en",
+    "supported_languages": ["en", "hu"],
+    "language_names": {
+      "en": "English",
+      "hu": "Magyar"
+    }
+  },
+  "tracking": {
+    "google_analytics": "GA_ID_HERE",
+    "facebook_pixel": "YOUR_PIXEL_ID_HERE",
+    "gtag_config": "GA_MEASUREMENT_ID_HERE"
+  },
+  "seo": {
+    "default_image": "images/hero/homepage2k.png",
+    "twitter_card": "summary_large_image",
+    "og_type": "website"
+  },
+  "features": {
+    "multilingual": true,
+    "dynamic_content": true,
+    "analytics": true,
+    "cookie_consent": true
+  },
+  "emailjs": {
+    "service_id": "service_pn1nrz6",
+    "template_id": "template_thoqnhx",
+    "public_key": "klvidjuePqBFE5eAb",
+    "website_name": "Sailing Billabong"
+  }
+}

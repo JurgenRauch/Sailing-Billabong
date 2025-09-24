@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Sailing Billabong</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components.css">
+    
+    <!-- EmailJS -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+</head>
+<body>
+    <!-- Dynamic Header -->
+    <div id="header"></div>
+
+    <main>
+        <!-- Contact Hero Section -->
+        <section class="hero-section" style="background: linear-gradient(135deg, var(--navy-primary) 0%, var(--blue-primary) 100%); color: var(--text-light); padding: 4rem 0; text-align: center;">
+            <div class="container">
+                <h1 style="font-size: 3rem; margin-bottom: 1rem; font-weight: 700;">Contact Us</h1>
+                <p style="font-size: 1.2rem; margin-bottom: 2rem; opacity: 0.9;">Get in touch for your next sailing adventure</p>
+            </div>
+        </section>
+
+        <!-- Contact Form Section -->
+        <section class="contact-section" style="padding: 4rem 0;">
+            <div class="container">
+                <div class="contact-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start;">
+                    
+                    <!-- Contact Form -->
+                    <div class="contact-form-container">
+                        <h2 style="color: var(--navy-primary); margin-bottom: 2rem;">Send us a Message</h2>
+                        
+                        <form id="contact-form" class="contact-form" style="display: flex; flex-direction: column; gap: 1.5rem;">
+                            <div class="form-group">
+                                <label for="from_name" style="display: block; margin-bottom: 0.5rem; color: var(--text-dark); font-weight: 500;">Name *</label>
+                                <input type="text" id="from_name" name="from_name" required 
+                                       style="width: 100%; padding: 1rem; border: 2px solid var(--grey-light); border-radius: 8px; font-size: 1rem;">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="from_email" style="display: block; margin-bottom: 0.5rem; color: var(--text-dark); font-weight: 500;">Email *</label>
+                                <input type="email" id="from_email" name="from_email" required 
+                                       style="width: 100%; padding: 1rem; border: 2px solid var(--grey-light); border-radius: 8px; font-size: 1rem;">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="subject" style="display: block; margin-bottom: 0.5rem; color: var(--text-dark); font-weight: 500;">Subject</label>
+                                <input type="text" id="subject" name="subject" 
+                                       style="width: 100%; padding: 1rem; border: 2px solid var(--grey-light); border-radius: 8px; font-size: 1rem;">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="message" style="display: block; margin-bottom: 0.5rem; color: var(--text-dark); font-weight: 500;">Message *</label>
+                                <textarea id="message" name="message" rows="6" required 
+                                          style="width: 100%; padding: 1rem; border: 2px solid var(--grey-light); border-radius: 8px; font-size: 1rem; resize: vertical;"></textarea>
+                            </div>
+                            
+                            <button type="submit" id="submit-btn" 
+                                    style="background: var(--blue-primary, #007bff); color: white; padding: 1rem 2rem; border: none; border-radius: 8px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: background-color 0.3s ease; display: block; width: 100%;">
+                                Send Message
+                            </button>
+                        </form>
+                        
+                        <!-- Status Messages -->
+                        <div id="form-status" style="margin-top: 1rem; padding: 1rem; border-radius: 8px; display: none;"></div>
+                    </div>
+                    
+                    <!-- Contact Information -->
+                    <div class="contact-info">
+                        <h2 style="color: var(--navy-primary); margin-bottom: 2rem;">Get in Touch</h2>
+                        
+                        <div class="contact-details" style="display: flex; flex-direction: column; gap: 2rem;">
+                            <div class="contact-item">
+                                <h3 style="color: var(--blue-primary); margin-bottom: 0.5rem;">Email</h3>
+                                <p data-contact="email">info@sailingbillabong.com</p>
+                            </div>
+                            
+                            <div class="contact-item">
+                                <h3 style="color: var(--blue-primary); margin-bottom: 0.5rem;">Phone</h3>
+                                <p data-contact="phone">+1 (555) 123-4567</p>
+                            </div>
+                            
+                            <div class="contact-item">
+                                <h3 style="color: var(--blue-primary); margin-bottom: 0.5rem;">Business Hours</h3>
+                                <p>Monday - Friday: 9:00 AM - 6:00 PM</p>
+                                <p>Weekend tours available by appointment</p>
+                            </div>
+                            
+                            <div class="contact-item">
+                                <h3 style="color: var(--blue-primary); margin-bottom: 0.5rem;">Follow Us</h3>
+                                <div class="social-links" style="display: flex; gap: 1rem;">
+                                    <!-- Social links will be populated dynamically -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Dynamic Footer -->
+    <div id="footer"></div>
+
+    <!-- JavaScript -->
+    <script src="js/favicon.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/universal-tracking.js"></script>
+</body>
+</html>

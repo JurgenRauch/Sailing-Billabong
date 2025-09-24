@@ -4,9 +4,18 @@
 (function() {
     'use strict';
     
-    // Configuration - Replace with your actual tracking IDs
-    const FACEBOOK_PIXEL_ID = 'YOUR_PIXEL_ID_HERE'; // Replace with your actual Facebook Pixel ID
-    const GOOGLE_ANALYTICS_ID = 'G-XXXXXXXXXX'; // Replace with your actual GA4 Measurement ID
+    // Configuration - Get tracking IDs from centralized config (will be loaded by main.js)
+    let FACEBOOK_PIXEL_ID = 'YOUR_PIXEL_ID_HERE'; // Fallback value
+    let GOOGLE_ANALYTICS_ID = 'G-XXXXXXXXXX'; // Fallback value
+    
+    // Update tracking IDs from centralized config if available
+    function updateTrackingIds() {
+        if (window.siteData && window.siteData.config && window.siteData.config.tracking) {
+            const tracking = window.siteData.config.tracking;
+            GOOGLE_ANALYTICS_ID = tracking.gtag_config || GOOGLE_ANALYTICS_ID;
+            FACEBOOK_PIXEL_ID = tracking.facebook_pixel || FACEBOOK_PIXEL_ID;
+        }
+    }
     const SCRIPT_BASE_PATH = getScriptBasePath();
     
     // Determine the base path for loading other scripts
@@ -17,6 +26,7 @@
     
     // Initialize Google Analytics 4
     function initGoogleAnalytics() {
+        updateTrackingIds(); // Update IDs from centralized config
         console.log('📊 Loading Google Analytics script...');
         
         // Load Google Analytics script
@@ -41,6 +51,7 @@
     
     // Initialize Facebook Pixel
     function initFacebookPixel() {
+        updateTrackingIds(); // Update IDs from centralized config
         // Facebook Pixel Base Code
         !function(f,b,e,v,n,t,s)
         {if(f.fbq)return;n=f.fbq=function(){n.callMethod?

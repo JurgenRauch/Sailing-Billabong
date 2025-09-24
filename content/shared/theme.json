@@ -1,0 +1,79 @@
+{
+  "brand": {
+    "name": "Sailing Billabong",
+    "logo_text": ["Sailing", "Billabong"],
+    "primary_color": "#2c5aa0",
+    "secondary_color": "#87ceeb",
+    "accent_color": "#4a90b8"
+  },
+  "colors": {
+    "navy": {
+      "dark": "#1a365d",
+      "primary": "#2c5aa0",
+      "light": "#4a90b8"
+    },
+    "blue": {
+      "light": "#e6f3ff",
+      "accent": "#87ceeb",
+      "active": "#3b82f6"
+    },
+    "background": {
+      "light": "#f8fafc",
+      "white": "#ffffff",
+      "grey_light": "#f1f5f9"
+    },
+    "text": {
+      "primary": "#1a365d",
+      "body": "#334155",
+      "muted": "#64748b",
+      "light": "#ffffff"
+    },
+    "grey": {
+      "light": "#f1f5f9",
+      "medium": "#64748b",
+      "dark": "#334155"
+    }
+  },
+  "typography": {
+    "font_family": "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+    "headings": {
+      "h1": {
+        "size": "2rem",
+        "weight": "700",
+        "color": "var(--text-primary)"
+      },
+      "h2": {
+        "size": "1.75rem",
+        "weight": "600",
+        "color": "var(--text-primary)"
+      },
+      "h3": {
+        "size": "1.5rem",
+        "weight": "600",
+        "color": "var(--navy-primary)"
+      },
+      "h4": {
+        "size": "1.25rem",
+        "weight": "500",
+        "color": "var(--text-body)"
+      }
+    },
+    "body": {
+      "size": "1rem",
+      "line_height": "1.6",
+      "color": "var(--text-body)"
+    }
+  },
+  "shadows": {
+    "light": "0 1px 3px rgba(26, 54, 93, 0.1)",
+    "medium": "0 4px 12px rgba(26, 54, 93, 0.15)",
+    "heavy": "0 8px 25px rgba(26, 54, 93, 0.2)",
+    "blue": "0 4px 20px rgba(44, 90, 160, 0.3)"
+  },
+  "border_radius": {
+    "small": "5px",
+    "medium": "10px",
+    "large": "15px",
+    "pill": "50px"
+  }
+}

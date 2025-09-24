@@ -1,0 +1,122 @@
+{
+  "en": {
+    "main_nav": [
+      {
+        "id": "home",
+        "label": "Home",
+        "url": "index.html",
+        "active_pages": ["index.html", ""]
+      },
+      {
+        "id": "about",
+        "label": "About & Gallery",
+        "url": "about.html",
+        "active_pages": ["about.html"]
+      },
+      {
+        "id": "tours",
+        "label": "Tours",
+        "url": "tours.html",
+        "active_pages": ["tours.html"]
+      },
+      {
+        "id": "contact",
+        "label": "Contact & Booking",
+        "url": "contact.html",
+        "active_pages": ["contact.html"]
+      },
+      {
+        "id": "blog",
+        "label": "Blog",
+        "url": "blog.html",
+        "active_pages": ["blog.html"]
+      }
+    ],
+    "footer_nav": [
+      {
+        "label": "About",
+        "url": "about.html"
+      },
+      {
+        "label": "Tours",
+        "url": "tours.html"
+      },
+      {
+        "label": "Contact",
+        "url": "contact.html"
+      },
+      {
+        "label": "Privacy",
+        "url": "privacy-policy.html"
+      }
+    ],
+    "language_switcher": {
+      "current": "EN",
+      "other": {
+        "code": "hu",
+        "label": "HU",
+        "name": "Magyar"
+      }
+    }
+  },
+  "hu": {
+    "main_nav": [
+      {
+        "id": "home",
+        "label": "Főoldal",
+        "url": "index.html",
+        "active_pages": ["index.html", ""]
+      },
+      {
+        "id": "about",
+        "label": "Rólunk és Galéria",
+        "url": "about.html",
+        "active_pages": ["about.html"]
+      },
+      {
+        "id": "tours",
+        "label": "Túrák",
+        "url": "tours.html",
+        "active_pages": ["tours.html"]
+      },
+      {
+        "id": "contact",
+        "label": "Kapcsolat és Foglalás",
+        "url": "contact.html",
+        "active_pages": ["contact.html"]
+      },
+      {
+        "id": "blog",
+        "label": "Blog",
+        "url": "blog.html",
+        "active_pages": ["blog.html"]
+      }
+    ],
+    "footer_nav": [
+      {
+        "label": "Rólunk",
+        "url": "about.html"
+      },
+      {
+        "label": "Túrák",
+        "url": "tours.html"
+      },
+      {
+        "label": "Kapcsolat",
+        "url": "contact.html"
+      },
+      {
+        "label": "Adatvédelem",
+        "url": "privacy-policy.html"
+      }
+    ],
+    "language_switcher": {
+      "current": "HU",
+      "other": {
+        "code": "en",
+        "label": "EN",
+        "name": "English"
+      }
+    }
+  }
+}

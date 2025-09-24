@@ -1,0 +1,30 @@
+{
+  "contact": {
+    "email": "info@sailingbillabong.com",
+    "phone": "+1 (555) 123-4567",
+    "privacy_email": "privacy@sailingbillabong.com",
+    "address": {
+      "street": "",
+      "city": "",
+      "country": "",
+      "postal_code": ""
+    }
+  },
+  "social": {
+    "instagram": {
+      "url": "https://www.instagram.com/sailing_billabong/",
+      "handle": "@sailing_billabong",
+      "icon": "📷"
+    },
+    "facebook": {
+      "url": "https://www.facebook.com/SailingBillabong/",
+      "handle": "SailingBillabong",
+      "icon": "📘"
+    }
+  },
+  "business_hours": {
+    "timezone": "UTC",
+    "office_hours": "9:00 AM - 6:00 PM",
+    "days": "Monday - Friday"
+  }
+}
