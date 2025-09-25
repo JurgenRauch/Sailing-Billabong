@@ -108,11 +108,18 @@ function populateHeaderData() {
                 dropdownContainer.appendChild(dropdownMenu);
                 desktopNav.appendChild(dropdownContainer);
             } else {
+                // Use nav-dropdown class for consistency, but without dropdown functionality
+                const navContainer = document.createElement('div');
+                navContainer.className = 'nav-dropdown';
+                
                 const desktopLink = document.createElement('a');
                 desktopLink.href = item.url;
                 desktopLink.id = `nav-${item.id}`;
                 desktopLink.textContent = item.label;
-                desktopNav.appendChild(desktopLink);
+                desktopLink.className = 'nav-dropdown-toggle';
+                
+                navContainer.appendChild(desktopLink);
+                desktopNav.appendChild(navContainer);
             }
             
             // Mobile navigation (simplified - no dropdown for mobile)
@@ -134,6 +141,9 @@ function populateHeaderData() {
                 });
             }
         });
+        
+        // Set active states for navigation items
+        setActiveNavItem();
     }
     
     // Update language switcher
@@ -378,42 +388,56 @@ function showLinkCopiedNotification(element) {
 
 // Set active navigation item based on current page
 function setActiveNavItem() {
-    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-    const isHungarian = window.location.pathname.includes('/hu/');
+    if (!siteData.navigation || !siteData.navigation[siteData.currentLang]) return;
+    
+    const navData = siteData.navigation[siteData.currentLang];
+    const currentPage = getCurrentPageName();
     
     // Remove active class from all nav items
-    const navLinks = document.querySelectorAll('.nav a, .mobile-nav a');
-    navLinks.forEach(link => link.classList.remove('active'));
+    document.querySelectorAll('.nav a, .nav-dropdown, .mobile-nav a').forEach(item => {
+        item.classList.remove('active');
+    });
     
-    // Determine which nav item should be active
-    let activeNavId = '';
-    switch(currentPage) {
-        case 'index.html':
-        case '':
-            activeNavId = 'home';
-            break;
-        case 'about.html':
-            activeNavId = 'about';
-            break;
-        case 'tours.html':
-            activeNavId = 'tours';
-            break;
-        case 'contact.html':
-            activeNavId = 'contact';
-            break;
-        case 'blog.html':
-            activeNavId = 'blog';
-            break;
-    }
-    
-    // Set active class for desktop and mobile nav
-    if (activeNavId) {
-        const desktopNav = document.getElementById(`nav-${activeNavId}`);
-        const mobileNav = document.getElementById(`mobile-nav-${activeNavId}`);
+    // Set active state for matching navigation items
+    navData.main_nav.forEach(item => {
+        const isActive = item.active_pages && item.active_pages.includes(currentPage);
         
-        if (desktopNav) desktopNav.classList.add('active');
-        if (mobileNav) mobileNav.classList.add('active');
+        if (isActive) {
+            // Handle dropdown items
+            if (item.dropdown) {
+                const dropdownContainer = document.querySelector(`#nav-${item.id}`);
+                if (dropdownContainer && dropdownContainer.closest('.nav-dropdown')) {
+                    dropdownContainer.closest('.nav-dropdown').classList.add('active');
+                }
+            } else {
+                // Handle regular nav items
+                const navItem = document.querySelector(`#nav-${item.id}`);
+                if (navItem) {
+                    navItem.classList.add('active');
+                }
+            }
+            
+            // Handle mobile nav
+            const mobileNavItem = document.querySelector(`#mobile-nav-${item.id}`);
+            if (mobileNavItem) {
+                mobileNavItem.classList.add('active');
+            }
+        }
+    });
+}
+
+// Get current page name for active state matching
+function getCurrentPageName() {
+    const path = window.location.pathname;
+    const filename = path.split('/').pop();
+    
+    // Handle different cases
+    if (!filename || filename === '' || filename === '/') {
+        return 'index.html';
     }
+    
+    // Remove query parameters and hash
+    return filename.split('?')[0].split('#')[0];
 }
 
 // Set current language button as active

@@ -25,12 +25,12 @@
       },
       {
         "id": "about",
-        "label": "About Us",
+        "label": "Billabong",
         "url": "about.html",
-        "active_pages": ["about.html", "tours.html", "gallery.html"],
+        "active_pages": ["about.html", "tours.html", "gallery.html", "blog.html"],
         "dropdown": [
           {
-            "label": "Billabong",
+            "label": "About Us",
             "url": "about.html"
           },
           {
@@ -40,6 +40,10 @@
           {
             "label": "Gallery",
             "url": "gallery.html"
+          },
+          {
+            "label": "Blog",
+            "url": "blog.html"
           }
         ]
       }
@@ -97,12 +101,12 @@
       },
       {
         "id": "about",
-        "label": "Rólunk",
+        "label": "Billabong",
         "url": "about.html",
-        "active_pages": ["about.html", "tours.html", "gallery.html"],
+        "active_pages": ["about.html", "tours.html", "gallery.html", "blog.html"],
         "dropdown": [
           {
-            "label": "Billabong",
+            "label": "Rólunk",
             "url": "about.html"
           },
           {
@@ -112,6 +116,10 @@
           {
             "label": "Galéria",
             "url": "gallery.html"
+          },
+          {
+            "label": "Blog",
+            "url": "blog.html"
           }
         ]
       }
