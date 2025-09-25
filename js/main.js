@@ -91,7 +91,7 @@ function populateHeaderData() {
                 const mainLink = document.createElement('a');
                 mainLink.href = item.url;
                 mainLink.id = `nav-${item.id}`;
-                mainLink.textContent = item.label + ' ▼';
+                mainLink.textContent = item.label;
                 mainLink.className = 'nav-dropdown-toggle';
                 
                 const dropdownMenu = document.createElement('div');
@@ -620,4 +620,15 @@ function getSiteConfig() {
 // Utility function to get theme data
 function getThemeData() {
     return siteData.theme || null;
+}
+
+// Scroll to next section function
+function scrollToNextSection() {
+    const nextSection = document.querySelector('#features');
+    if (nextSection) {
+        nextSection.scrollIntoView({ 
+            behavior: 'smooth',
+            block: 'start'
+        });
+    }
 }

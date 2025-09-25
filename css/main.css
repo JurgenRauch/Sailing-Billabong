@@ -519,6 +519,78 @@ p {
   z-index: 2;
 }
 
+/* Scroll down indicator - Performance optimized */
+.scroll-down-indicator {
+  position: absolute;
+  bottom: 2rem;
+  right: 25%;
+  z-index: 3;
+  cursor: pointer;
+  will-change: transform;
+  animation: subtleBounce 3s ease-in-out infinite;
+}
+
+.scroll-icon {
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  transition: all 0.2s ease;
+  color: rgba(26, 54, 93, 0.8);
+}
+
+.scroll-icon:hover {
+  background: rgba(255, 255, 255, 0.95);
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  color: var(--navy-primary);
+}
+
+.scroll-icon svg {
+  width: 20px;
+  height: 20px;
+  stroke-width: 2.5;
+}
+
+/* Subtle bounce animation - GPU optimized */
+@keyframes subtleBounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .scroll-down-indicator {
+    right: 1.5rem;
+    bottom: 1.5rem;
+  }
+  
+  .scroll-icon {
+    width: 42px;
+    height: 42px;
+  }
+  
+  .scroll-icon svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .scroll-down-indicator {
+    animation: none;
+  }
+}
+
 .hero h1 {
   font-size: 3.5rem;
   font-weight: 700;
