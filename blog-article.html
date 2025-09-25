@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="article-title">Article - Sailing Billabong</title>
+    <meta name="description" id="article-description" content="Read sailing adventures, tips, and stories from Sailing Billabong.">
+    <meta name="keywords" content="sailing blog, adventure sailing, sailing tips, Caribbean sailing, yacht adventures">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components.css">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" id="og-title" content="Article - Sailing Billabong">
+    <meta property="og:description" id="og-description" content="Read sailing adventures from Sailing Billabong.">
+    <meta property="og:image" id="og-image" content="images/hero/homepagehd.png">
+    <meta property="og:url" content="https://www.sailingbillabong.com/blog-article.html">
+    <meta property="og:type" content="article">
+</head>
+<body>
+    <!-- Header -->
+    <div id="header"></div>
+
+    <!-- Article Content -->
+    <article class="article-page">
+        <div class="article-hero">
+            <div class="container">
+                <div class="article-breadcrumb">
+                    <a href="index.html">Home</a> / <a href="blog.html">Blog</a> / <span id="breadcrumb-title">Article</span>
+                </div>
+                <div class="article-meta">
+                    <span class="article-category" id="article-category-display">Category</span>
+                    <span class="article-date" id="article-date-display">Date</span>
+                </div>
+                <h1 id="article-title-display">Article Title</h1>
+                <p class="article-excerpt" id="article-excerpt-display">Article description</p>
+            </div>
+        </div>
+        
+        <div class="article-content">
+            <div class="container">
+                <div class="article-image-container">
+                    <img id="article-featured-image" src="" alt="" class="article-featured-image">
+                </div>
+                
+                <div class="article-body" id="article-body">
+                    <p>Article content will be loaded here...</p>
+                </div>
+                
+                <div class="article-footer">
+                    <div class="article-tags" id="article-tags">
+                        <!-- Tags will be populated dynamically -->
+                    </div>
+                    
+                    <div class="article-navigation">
+                        <a href="blog.html" class="back-to-blog">← Back to Blog</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <!-- Footer -->
+    <div id="footer"></div>
+
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
+    <script src="js/universal-tracking.js"></script>
+    <script>
+        // Load article content when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            loadArticleContent();
+        });
+    </script>
+</body>
+</html>

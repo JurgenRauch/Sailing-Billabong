@@ -16,11 +16,12 @@ async function loadIncludes() {
         siteData.currentLang = window.location.pathname.includes('/hu/') ? 'hu' : 'en';
         
         // Load all JSON configuration files in parallel
-        const [configResponse, contactResponse, themeResponse, navigationResponse] = await Promise.all([
+        const [configResponse, contactResponse, themeResponse, navigationResponse, blogResponse] = await Promise.all([
             fetch('content/shared/config.json'),
             fetch('content/shared/contact.json'),
             fetch('content/shared/theme.json'),
-            fetch('content/shared/navigation.json')
+            fetch('content/shared/navigation.json'),
+            fetch('content/shared/blog.json')
         ]);
         
         // Parse JSON data
@@ -28,6 +29,7 @@ async function loadIncludes() {
         siteData.contact = await contactResponse.json();
         siteData.theme = await themeResponse.json();
         siteData.navigation = await navigationResponse.json();
+        siteData.blog = await blogResponse.json();
         
         // Load header and footer HTML
         const [headerResponse, footerResponse] = await Promise.all([
@@ -48,6 +50,11 @@ async function loadIncludes() {
         
         // Initialize other functions after includes are loaded
         initializeAfterLoad();
+        
+        // Initialize blog functionality
+        setTimeout(() => {
+            initializeBlog();
+        }, 100);
         
     } catch (error) {
         console.error('Error loading includes:', error);
@@ -491,8 +498,26 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
         // Initialize everything directly (static content)
         initializeAfterLoad();
+        
+        // Try to load blog data separately if not loaded
+        loadBlogDataSeparately();
     }
 });
+
+// Load blog data separately if main loadIncludes fails
+async function loadBlogDataSeparately() {
+    try {
+        const blogResponse = await fetch('content/shared/blog.json');
+        siteData.blog = await blogResponse.json();
+        console.log('Blog data loaded separately:', siteData.blog);
+        
+        setTimeout(() => {
+            initializeBlog();
+        }, 100);
+    } catch (error) {
+        console.error('Error loading blog data separately:', error);
+    }
+}
 
 
 // Utility function for loading content dynamically (for future use)
@@ -529,15 +554,22 @@ function getSocialLinks() {
 
 // EmailJS functionality
 function initializeEmailJS() {
-    // Initialize EmailJS with public key from config
-    if (siteData.config && siteData.config.emailjs) {
-        emailjs.init(siteData.config.emailjs.public_key);
-        
-        // Set up contact form handler
-        const contactForm = document.getElementById('contact-form');
-        if (contactForm) {
-            contactForm.addEventListener('submit', handleContactFormSubmit);
+    // Check if EmailJS is available and config exists
+    if (typeof emailjs !== 'undefined' && siteData.config && siteData.config.emailjs) {
+        try {
+            emailjs.init(siteData.config.emailjs.public_key);
+            
+            // Set up contact form handler
+            const contactForm = document.getElementById('contact-form');
+            if (contactForm) {
+                contactForm.addEventListener('submit', handleContactFormSubmit);
+            }
+            console.log('EmailJS initialized successfully');
+        } catch (error) {
+            console.warn('EmailJS initialization failed:', error);
         }
+    } else {
+        console.log('EmailJS not available or not configured');
     }
 }
 
@@ -548,6 +580,12 @@ async function handleContactFormSubmit(event) {
     const form = event.target;
     const submitBtn = document.getElementById('submit-btn');
     const statusDiv = document.getElementById('form-status');
+    
+    // Check if EmailJS is available
+    if (typeof emailjs === 'undefined') {
+        showFormStatus('error', 'Email service not available. Please contact us directly.');
+        return;
+    }
     
     // Disable submit button and show loading state
     submitBtn.disabled = true;
@@ -630,5 +668,189 @@ function scrollToNextSection() {
             behavior: 'smooth',
             block: 'start'
         });
+    }
+}
+
+// Blog functionality
+function initializeBlog() {
+    console.log('Initializing blog...', siteData.blog);
+    
+    // Populate blog page if we're on it
+    if (document.getElementById('blog-grid')) {
+        console.log('Found blog-grid, populating blog page...');
+        populateBlogPage();
+    }
+    
+    // Populate latest posts on homepage
+    if (document.getElementById('latest-posts-grid')) {
+        console.log('Found latest-posts-grid, populating latest posts...');
+        populateLatestPosts();
+    }
+}
+
+// Populate blog page with all articles
+function populateBlogPage() {
+    if (!siteData.blog || !siteData.blog.articles) return;
+    
+    const blogGrid = document.getElementById('blog-grid');
+    const articles = siteData.blog.articles.filter(article => article.published);
+    
+    // Sort articles by date (newest first)
+    articles.sort((a, b) => new Date(b.creation_date) - new Date(a.creation_date));
+    
+    blogGrid.innerHTML = articles.map(article => createBlogCard(article, 'full')).join('');
+}
+
+// Populate latest posts section on homepage
+function populateLatestPosts() {
+    console.log('populateLatestPosts called', siteData.blog);
+    
+    if (!siteData.blog || !siteData.blog.articles) {
+        console.error('No blog data available');
+        return;
+    }
+    
+    const latestPostsGrid = document.getElementById('latest-posts-grid');
+    if (!latestPostsGrid) {
+        console.error('latest-posts-grid element not found');
+        return;
+    }
+    
+    const articles = siteData.blog.articles.filter(article => article.published);
+    console.log('Published articles:', articles);
+    
+    // Sort articles by date (newest first) and take only 3
+    const latestArticles = articles
+        .sort((a, b) => new Date(b.creation_date) - new Date(a.creation_date))
+        .slice(0, 3);
+    
+    console.log('Latest articles to display:', latestArticles);
+    
+    const html = latestArticles.map(article => createBlogCard(article, 'compact')).join('');
+    console.log('Generated HTML:', html);
+    
+    latestPostsGrid.innerHTML = html;
+}
+
+// Create blog card HTML
+function createBlogCard(article, type = 'full') {
+    const category = siteData.blog.categories[article.category];
+    const formattedDate = formatDate(article.creation_date);
+    
+    if (type === 'compact') {
+        return `
+            <div class="latest-post-card" onclick="window.location.href='blog-article.html?id=${article.id}'">
+                <img src="${article.featured_image}" alt="${article.title}" class="latest-post-image" loading="lazy">
+                <div class="latest-post-content">
+                    <div class="latest-post-meta">
+                        <span class="latest-post-category" style="background-color: ${category.color}">${category.name}</span>
+                        <span class="latest-post-date">${formattedDate}</span>
+                    </div>
+                    <h3>${article.title}</h3>
+                    <p>${article.short_description}</p>
+                </div>
+            </div>
+        `;
+    } else {
+        return `
+            <div class="blog-card" onclick="window.location.href='blog-article.html?id=${article.id}'">
+                <img src="${article.featured_image}" alt="${article.title}" class="blog-card-image" loading="lazy">
+                <div class="blog-card-content">
+                    <span class="blog-category" style="background-color: ${category.color}">${category.name}</span>
+                    <h3>${article.title}</h3>
+                    <div class="blog-date">${formattedDate}</div>
+                    <p>${article.short_description}</p>
+                    <a href="blog-article.html?id=${article.id}" class="blog-read-more">Read More →</a>
+                </div>
+            </div>
+        `;
+    }
+}
+
+// Format date for display
+function formatDate(dateString) {
+    const date = new Date(dateString);
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return date.toLocaleDateString('en-US', options);
+}
+
+// Load individual article content
+function loadArticleContent() {
+    if (!siteData.blog || !siteData.blog.articles) return;
+    
+    // Get article ID from URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const articleId = urlParams.get('id');
+    
+    if (!articleId) {
+        // Redirect to blog page if no article ID
+        window.location.href = 'blog.html';
+        return;
+    }
+    
+    // Find the article
+    const article = siteData.blog.articles.find(a => a.id === articleId);
+    
+    if (!article || !article.published) {
+        // Redirect to blog page if article not found
+        window.location.href = 'blog.html';
+        return;
+    }
+    
+    // Get category info
+    const category = siteData.blog.categories[article.category];
+    const formattedDate = formatDate(article.creation_date);
+    
+    // Update page title and meta tags
+    document.title = `${article.title} - Sailing Billabong`;
+    document.getElementById('article-title').content = `${article.title} - Sailing Billabong`;
+    document.getElementById('article-description').content = article.short_description;
+    document.getElementById('og-title').content = article.title;
+    document.getElementById('og-description').content = article.short_description;
+    document.getElementById('og-image').content = article.featured_image;
+    
+    // Update article content
+    document.getElementById('breadcrumb-title').textContent = article.title;
+    document.getElementById('article-category-display').textContent = category.name;
+    document.getElementById('article-category-display').style.backgroundColor = category.color;
+    document.getElementById('article-date-display').textContent = formattedDate;
+    document.getElementById('article-title-display').textContent = article.title;
+    document.getElementById('article-excerpt-display').textContent = article.short_description;
+    
+    // Update featured image
+    const featuredImage = document.getElementById('article-featured-image');
+    featuredImage.src = article.featured_image;
+    featuredImage.alt = article.title;
+    
+    // Update article body (placeholder content for now)
+    const articleBody = document.getElementById('article-body');
+    if (article.content && article.content.trim()) {
+        articleBody.innerHTML = article.content;
+    } else {
+        articleBody.innerHTML = `
+            <p>This is a test article for <strong>${article.title}</strong>.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            <h2>Adventure Awaits</h2>
+            <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+            <h3>What to Expect</h3>
+            <ul>
+                <li>Professional crew and safety equipment</li>
+                <li>Comfortable sailing yacht with modern amenities</li>
+                <li>Stunning views and pristine waters</li>
+                <li>Unforgettable memories with family and friends</li>
+            </ul>
+            <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+        `;
+    }
+    
+    // Update tags
+    const tagsContainer = document.getElementById('article-tags');
+    if (article.tags && article.tags.length > 0) {
+        tagsContainer.innerHTML = article.tags.map(tag => 
+            `<span class="article-tag">#${tag}</span>`
+        ).join('');
+    } else {
+        tagsContainer.style.display = 'none';
     }
 }

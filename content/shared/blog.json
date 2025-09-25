@@ -1,0 +1,50 @@
+{
+  "categories": {
+    "test": {
+      "name": "Test",
+      "color": "#2E5A9B",
+      "description": "Test articles and content"
+    }
+  },
+  "articles": [
+    {
+      "id": "article-1",
+      "title": "First Sailing Adventure",
+      "slug": "first-sailing-adventure",
+      "category": "test",
+      "creation_date": "2025-01-15",
+      "short_description": "Discover the magic of your first sailing experience with our expert crew and comfortable yacht.",
+      "featured_image": "images/hero/homepagehd.png",
+      "content": "",
+      "author": "Sailing Billabong Team",
+      "tags": ["sailing", "adventure", "beginner"],
+      "published": true
+    },
+    {
+      "id": "article-2",
+      "title": "Island Hopping Paradise",
+      "slug": "island-hopping-paradise",
+      "category": "test",
+      "creation_date": "2025-01-10",
+      "short_description": "Explore pristine islands and hidden coves on our most popular island hopping sailing tour.",
+      "featured_image": "images/hero/homepagehd.png",
+      "content": "",
+      "author": "Sailing Billabong Team",
+      "tags": ["islands", "exploration", "paradise"],
+      "published": true
+    },
+    {
+      "id": "article-3",
+      "title": "Sailing Tips for Beginners",
+      "slug": "sailing-tips-beginners",
+      "category": "test",
+      "creation_date": "2025-01-05",
+      "short_description": "Essential sailing tips and safety guidelines for those new to the wonderful world of sailing.",
+      "featured_image": "images/hero/homepagehd.png",
+      "content": "",
+      "author": "Sailing Billabong Team",
+      "tags": ["tips", "beginner", "safety"],
+      "published": true
+    }
+  ]
+}
