@@ -1,23 +1,39 @@
 // Contact form (EmailJS) isolated module
 (function() {
-	// Initialize EmailJS and wire the contact form if present on the page
-	function initContactForm() {
-		// Ensure EmailJS and config data are available
-		if (typeof emailjs === 'undefined' || !window.siteData || !siteData.config || !siteData.config.emailjs) {
-			return;
-		}
-		try {
-			emailjs.init(siteData.config.emailjs.public_key);
-			const contactForm = document.getElementById('contact-form');
-			if (!contactForm) return;
-			contactForm.addEventListener('submit', handleSubmit);
-		} catch (err) {
-			console.warn('EmailJS init failed:', err);
-		}
-	}
+    let emailInitialized = false;
+
+    // Initialize EmailJS (once) when config is available
+    async function ensureEmailReady(retries = 10, delayMs = 200) {
+        for (let attempt = 0; attempt < retries; attempt++) {
+            if (window.siteData && siteData.config && siteData.config.emailjs && typeof emailjs !== 'undefined') {
+                if (!emailInitialized) {
+                    try {
+                        emailjs.init(siteData.config.emailjs.public_key);
+                        emailInitialized = true;
+                    } catch (_) {
+                        // swallow and retry
+                    }
+                }
+                if (emailInitialized) return;
+            }
+            await new Promise(r => setTimeout(r, delayMs));
+        }
+        throw new Error('Email service not ready');
+    }
+
+    // Wire the contact form submit handler; do not depend on config being ready
+    function initContactForm() {
+        const contactForm = document.getElementById('contact-form');
+        if (!contactForm) return;
+        // Avoid double binding
+        if (!contactForm.__emailBound) {
+            contactForm.addEventListener('submit', handleSubmit);
+            contactForm.__emailBound = true;
+        }
+    }
 
 	// Send handler
-	async function handleSubmit(event) {
+    async function handleSubmit(event) {
 		event.preventDefault();
 		const form = event.target;
 		const submitBtn = document.getElementById('submit-btn');
@@ -28,6 +44,8 @@
 		}
 
 		try {
+            // Make sure EmailJS and config are ready (wait briefly if needed)
+            await ensureEmailReady();
 			const formData = new FormData(form);
 			const contactEmail = 'contact@sailingbillabong.com'; // single fixed recipient
 			const params = {
@@ -81,12 +99,12 @@
 		setTimeout(() => { statusDiv.style.display = 'none'; }, 5000);
 	}
 
-	// Auto-init on DOM ready if the contact form exists
-	document.addEventListener('DOMContentLoaded', function() {
-		if (document.getElementById('contact-form')) {
-			initContactForm();
-		}
-	});
+    // Init immediately if DOM is already ready; also listen for DOMContentLoaded
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initContactForm);
+    } else {
+        initContactForm();
+    }
 
 	// Also expose a manual initializer for explicit usage
 	window.initContactForm = initContactForm;
