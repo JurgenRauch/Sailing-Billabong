@@ -9,18 +9,15 @@ let siteData = {
     currentLang: 'en'
 };
 
-// Dev-only logging helper
-const __isDevEnv = (location && (location.hostname === 'localhost' || location.hostname === '127.0.0.1')) || location.protocol === 'file:';
-function devLog() {
-    if (__isDevEnv) {
-        // eslint-disable-next-line no-console
-        console.log.apply(console, arguments);
-    }
-}
-
 // Lightweight global debug helpers
 function sbIsDebugEnabled() {
     try {
+        // Enable logs automatically on localhost and file:// for development
+        if (window && window.location) {
+            const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+            const isFile = window.location.protocol === 'file:';
+            if (isLocalhost || isFile) return true;
+        }
         if (typeof window.SB_DEBUG_ENABLED === 'boolean') return window.SB_DEBUG_ENABLED;
         if (siteData && siteData.config && siteData.config.tracking && typeof siteData.config.tracking.debug === 'boolean') {
             return !!siteData.config.tracking.debug;
@@ -596,7 +593,7 @@ async function loadBlogDataSeparately() {
     try {
         const blogResponse = await fetch('content/shared/blog.json');
         siteData.blog = await blogResponse.json();
-        console.log('Blog data loaded separately:', siteData.blog);
+        sbLog('Blog data loaded separately:', siteData.blog);
         
         setTimeout(() => {
             initializeBlog();

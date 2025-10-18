@@ -239,21 +239,29 @@
         }
     }
     
-    // Get current page name
+    // Get current page name (supports clean URLs and file-based URLs)
     function getCurrentPageName() {
-        const path = window.location.pathname;
-        const filename = path.split('/').pop();
-        
-        const pageMap = {
-            'index.html': 'home',
-            '': 'home',
-            'about.html': 'about',
-            'tours.html': 'tours',
-            'contact.html': 'contact',
-            'blog.html': 'blog'
-        };
-        
-        return pageMap[filename] || 'other';
+        const path = window.location.pathname; // e.g., '/', '/contact', '/hu/contact', '/blog/post'
+        // Handle file protocol style filenames as a fallback
+        if (/\.html?$/.test(path)) {
+            const filename = path.split('/').pop() || 'index.html';
+            const name = filename.replace(/\.html?$/i, '') || 'index';
+            if (name === 'index') return 'home';
+            return name;
+        }
+        // Normalize language prefix
+        const normalized = path.replace(/^\/hu\//, '/');
+        const segments = normalized.split('/').filter(Boolean); // remove empty
+        if (segments.length === 0) return 'home';
+        const first = segments[0];
+        // Map key routes
+        switch (first) {
+            case 'about': return 'about';
+            case 'tours': return 'tours';
+            case 'contact': return 'contact';
+            case 'blog': return segments.length > 1 ? 'blog' : 'blog';
+            default: return first || 'other';
+        }
     }
     
     // Initialize cookie consent banner
