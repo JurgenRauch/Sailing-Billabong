@@ -30,6 +30,8 @@
             contactForm.addEventListener('submit', handleSubmit);
             contactForm.__emailBound = true;
         }
+        // Populate booking period select (if present)
+        populateBookingPeriodSelect();
     }
 
 	// Send handler
@@ -58,6 +60,9 @@
                 reply_to: formData.get('from_email'),
 				subject: formData.get('subject') || 'Contact Form Submission',
 				message: formData.get('message'),
+				// include booking period selection if provided
+                booking_period: formData.get('booking_period') || '',
+                period: formData.get('booking_period') || '',
 				website: siteData.config.emailjs.website_name || 'Sailing Billabong',
 				to_email: contactEmail,
 				contactEmail: contactEmail
@@ -111,4 +116,38 @@
 
 	// Also expose a manual initializer for explicit usage
 	window.initContactForm = initContactForm;
+    
+    // Load booking options from centralized JSON and populate the select element
+    async function populateBookingPeriodSelect() {
+        const select = document.getElementById('booking_period');
+        if (!select) return;
+        try {
+            const response = await fetch('content/shared/booking-options.json');
+            if (!response.ok) throw new Error('Failed to load booking options');
+            const data = await response.json();
+            // Reset with placeholder
+            select.innerHTML = '';
+            const placeholder = document.createElement('option');
+            placeholder.value = '';
+            placeholder.disabled = true;
+            placeholder.selected = true;
+            placeholder.textContent = 'Select a period…';
+            select.appendChild(placeholder);
+            // Populate options; disabled if unavailable
+            if (data && Array.isArray(data.options)) {
+                data.options.forEach(optionItem => {
+                    const opt = document.createElement('option');
+                    opt.value = optionItem.label;
+                    opt.textContent = optionItem.available === false ? `${optionItem.label} (unavailable)` : optionItem.label;
+                    if (optionItem.available === false) {
+                        opt.disabled = true; // greyed out, not selectable
+                    }
+                    select.appendChild(opt);
+                });
+            }
+        } catch (error) {
+            console.error('Error populating booking periods:', error);
+            // Keep the placeholder if load fails
+        }
+    }
 })();
