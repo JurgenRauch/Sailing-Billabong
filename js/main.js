@@ -31,6 +31,13 @@ async function loadIncludes() {
         siteData.navigation = await navigationResponse.json();
         siteData.blog = await blogResponse.json();
         
+        // Notify listeners that config is ready (e.g., tracking scripts)
+        try {
+            window.dispatchEvent(new CustomEvent('siteConfigReady', { detail: siteData.config }));
+        } catch (e) {
+            console.warn('siteConfigReady event dispatch failed:', e);
+        }
+
         // Load header and footer HTML
         const [headerResponse, footerResponse] = await Promise.all([
             fetch('includes/header.html'),

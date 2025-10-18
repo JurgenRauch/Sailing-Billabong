@@ -12,8 +12,12 @@
     function updateTrackingIds() {
         if (window.siteData && window.siteData.config && window.siteData.config.tracking) {
             const tracking = window.siteData.config.tracking;
-            GOOGLE_ANALYTICS_ID = tracking.gtag_config || GOOGLE_ANALYTICS_ID;
-            FACEBOOK_PIXEL_ID = tracking.facebook_pixel || FACEBOOK_PIXEL_ID;
+            if (tracking.gtag_config && tracking.gtag_config !== 'GA_MEASUREMENT_ID_HERE') {
+                GOOGLE_ANALYTICS_ID = tracking.gtag_config;
+            }
+            if (tracking.facebook_pixel && tracking.facebook_pixel !== 'YOUR_PIXEL_ID_HERE') {
+                FACEBOOK_PIXEL_ID = tracking.facebook_pixel;
+            }
         }
     }
     const SCRIPT_BASE_PATH = getScriptBasePath();
@@ -52,6 +56,10 @@
     // Initialize Facebook Pixel
     function initFacebookPixel() {
         updateTrackingIds(); // Update IDs from centralized config
+        if (!FACEBOOK_PIXEL_ID || FACEBOOK_PIXEL_ID === 'YOUR_PIXEL_ID_HERE' || FACEBOOK_PIXEL_ID === 'null') {
+            console.warn('[Meta Pixel] Skipping init: invalid Pixel ID', FACEBOOK_PIXEL_ID);
+            return;
+        }
         // Facebook Pixel Base Code
         !function(f,b,e,v,n,t,s)
         {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -646,10 +654,24 @@
     }
     
     // Start initialization
+    function startWhenReady() {
+        // If config is already present, start immediately
+        updateTrackingIds();
+        if (window.siteData && window.siteData.config && window.siteData.config.tracking) {
+            init();
+            return;
+        }
+        // Otherwise wait for config-ready event
+        window.addEventListener('siteConfigReady', () => {
+            updateTrackingIds();
+            init();
+        }, { once: true });
+    }
+
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', init);
+        document.addEventListener('DOMContentLoaded', startWhenReady);
     } else {
-        init();
+        startWhenReady();
     }
     
     // Export for external use
