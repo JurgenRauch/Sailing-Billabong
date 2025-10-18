@@ -3,7 +3,7 @@
     let emailInitialized = false;
 
     // Initialize EmailJS (once) when config is available
-    async function ensureEmailReady(retries = 10, delayMs = 200) {
+    async function ensureEmailReady(retries = 40, delayMs = 250) {
         for (let attempt = 0; attempt < retries; attempt++) {
             if (window.siteData && siteData.config && siteData.config.emailjs && typeof emailjs !== 'undefined') {
                 if (!emailInitialized) {
@@ -48,12 +48,14 @@
             await ensureEmailReady();
 			const formData = new FormData(form);
 			const contactEmail = 'contact@sailingbillabong.com'; // single fixed recipient
-			const params = {
+            const params = {
 				from_name: formData.get('from_name'),
 				from_email: formData.get('from_email'),
 				// aliases for template compatibility
 				name: formData.get('from_name'),
 				email: formData.get('from_email'),
+                // some templates expect reply_to specifically
+                reply_to: formData.get('from_email'),
 				subject: formData.get('subject') || 'Contact Form Submission',
 				message: formData.get('message'),
 				website: siteData.config.emailjs.website_name || 'Sailing Billabong',
@@ -61,16 +63,17 @@
 				contactEmail: contactEmail
 			};
 
-			await emailjs.send(
+            const response = await emailjs.send(
 				siteData.config.emailjs.service_id,
 				siteData.config.emailjs.template_id,
 				params
 			);
 
+            console.log('EmailJS send success:', response);
 			showFormStatus('success', "Message sent successfully! We'll get back to you soon.");
 			form.reset();
 		} catch (error) {
-			console.error('EmailJS Error:', error);
+            console.error('EmailJS Error:', error && (error.text || error.message) || error);
 			showFormStatus('error', 'Failed to send message. Please try again or contact us directly.');
 		} finally {
 			if (submitBtn) {
