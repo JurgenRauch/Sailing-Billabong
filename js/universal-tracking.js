@@ -82,10 +82,16 @@
     
     // Track page-specific events
     function trackPageEvents() {
+        // Guard: if fbq is not available (e.g., blocked or not initialized), skip FB events
+        if (typeof window.fbq !== 'function') {
+            console.warn('Facebook Pixel not available; skipping FB events');
+            // Still proceed with GA events below
+        }
         const currentPage = getCurrentPageName();
         const pagePath = window.location.pathname;
         
         // Facebook Pixel events
+        if (typeof window.fbq === 'function') {
         switch(currentPage) {
             case 'home':
                 fbq('track', 'ViewContent', {
@@ -129,6 +135,7 @@
                         content_name: document.title
                     });
                 }
+        }
         }
         
         // Google Analytics tracking
