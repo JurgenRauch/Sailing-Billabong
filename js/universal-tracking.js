@@ -7,6 +7,7 @@
     // Configuration - Get tracking IDs from centralized config (will be loaded by main.js)
     let FACEBOOK_PIXEL_ID = 'YOUR_PIXEL_ID_HERE'; // Fallback value
     let GOOGLE_ANALYTICS_ID = 'G-XXXXXXXXXX'; // Fallback value
+    let DEBUG_TRACKING = false; // Suppress logs unless explicitly enabled
     
     // Update tracking IDs from centralized config if available
     function updateTrackingIds() {
@@ -18,7 +19,44 @@
             if (tracking.facebook_pixel && tracking.facebook_pixel !== 'YOUR_PIXEL_ID_HERE') {
                 FACEBOOK_PIXEL_ID = tracking.facebook_pixel;
             }
+            if (typeof tracking.debug === 'boolean') {
+                DEBUG_TRACKING = tracking.debug;
+            }
         }
+    }
+    
+    // Lightweight logging helpers
+    function logDebug() { if (DEBUG_TRACKING) console.log.apply(console, arguments); }
+    function logInfo() { if (DEBUG_TRACKING) console.info.apply(console, arguments); }
+    function logWarn() { if (DEBUG_TRACKING) console.warn.apply(console, arguments); }
+    
+    // Developer/test kill switch: allow disabling tracking via URL or localStorage
+    function debugNoTrackEnabled() {
+        try {
+            const params = new URLSearchParams(window.location.search);
+            const urlFlag = params.get('no_track') || params.get('sb_no_track');
+            const storeFlag = localStorage.getItem('sb_no_track') || localStorage.getItem('sb_debug_no_track');
+            const normalize = (v) => typeof v === 'string' && /^(1|true|yes)$/i.test(v.trim());
+            return normalize(urlFlag) || normalize(storeFlag);
+        } catch (e) {
+            return false;
+        }
+    }
+
+    // Respect Global Privacy Control / Do Not Track
+    function hasDoNotTrack() {
+        return (navigator.doNotTrack === '1' || window.doNotTrack === '1' || navigator.msDoNotTrack === '1');
+    }
+    function hasGlobalPrivacyControl() {
+        return navigator.globalPrivacyControl === true;
+    }
+    function trackingAllowed() {
+        const consent = getCookieConsent();
+        const marketingConsent = consent && typeof consent === 'object' && !!consent.marketing;
+        if (!marketingConsent) return false;
+        if (debugNoTrackEnabled()) return false;
+        if (hasDoNotTrack() || hasGlobalPrivacyControl()) return false;
+        return true;
     }
     const SCRIPT_BASE_PATH = getScriptBasePath();
     
@@ -31,7 +69,11 @@
     // Initialize Google Analytics 4
     function initGoogleAnalytics() {
         updateTrackingIds(); // Update IDs from centralized config
-        console.log('📊 Loading Google Analytics script...');
+        if (!trackingAllowed()) {
+            logInfo('📊 GA skipped due to privacy signals or no consent');
+            return;
+        }
+        logInfo('📊 Loading Google Analytics script...');
         
         // Load Google Analytics script
         const script = document.createElement('script');
@@ -42,22 +84,34 @@
         // Initialize gtag
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
+        
+        // Explicitly set consent before any config/events
+        gtag('consent', 'default', {
+            ad_storage: 'denied',
+            analytics_storage: 'granted'
+        });
+        
         gtag('js', new Date());
         gtag('config', GOOGLE_ANALYTICS_ID, {
             anonymize_ip: true, // GDPR compliance
-            cookie_flags: 'SameSite=None;Secure'
+            cookie_flags: 'SameSite=None;Secure',
+            send_page_view: false // avoid automatic page_view to reduce blocked requests
         });
         
         // Make gtag globally available
         window.gtag = gtag;
-        console.log('📊 Google Analytics initialized');
+        logInfo('📊 Google Analytics initialized');
     }
     
     // Initialize Facebook Pixel
     function initFacebookPixel() {
         updateTrackingIds(); // Update IDs from centralized config
+        if (!trackingAllowed()) {
+            logInfo('[Meta Pixel] Skipping init due to privacy signals or no consent');
+            return;
+        }
         if (!FACEBOOK_PIXEL_ID || FACEBOOK_PIXEL_ID === 'YOUR_PIXEL_ID_HERE' || FACEBOOK_PIXEL_ID === 'null') {
-            console.warn('[Meta Pixel] Skipping init: invalid Pixel ID', FACEBOOK_PIXEL_ID);
+            logInfo('[Meta Pixel] Skipping init: invalid Pixel ID', FACEBOOK_PIXEL_ID);
             return;
         }
         // Facebook Pixel Base Code
@@ -84,7 +138,7 @@
     function trackPageEvents() {
         // Guard: if fbq is not available (e.g., blocked or not initialized), skip FB events
         if (typeof window.fbq !== 'function') {
-            console.warn('Facebook Pixel not available; skipping FB events');
+            logInfo('Facebook Pixel not available; skipping FB events');
             // Still proceed with GA events below
         }
         const currentPage = getCurrentPageName();
@@ -139,8 +193,8 @@
         }
         
         // Google Analytics tracking
-        if (window.gtag) {
-            console.log('📊 Sending GA4 events...');
+        if (window.gtag && trackingAllowed()) {
+            logDebug('📊 Sending GA4 events...');
             
             // Enhanced page view tracking
             gtag('event', 'page_view', {
@@ -586,7 +640,7 @@
     function saveCookieSettings() {
         const marketingEnabled = document.getElementById('marketing-cookies').checked;
         
-        console.log('⚙️ Saving cookie settings - Marketing enabled:', marketingEnabled);
+        logInfo('⚙️ Saving cookie settings - Marketing enabled:', marketingEnabled);
         setCookieConsent({
             necessary: true,
             marketing: marketingEnabled
@@ -642,21 +696,21 @@
     function init() {
         const consent = getCookieConsent();
         
-        console.log('🚀 Sailing Billabong Tracking initialized');
-        console.log('🍪 Current cookie consent status:', consent);
+        logInfo('🚀 Sailing Billabong Tracking initialized');
+        logInfo('🍪 Current cookie consent status:', consent);
         
         if (consent && typeof consent === 'object' && consent.marketing) {
-            console.log('✅ User has consented to marketing, initializing tracking...');
+            logInfo('✅ User has consented to marketing, initializing tracking...');
             initGoogleAnalytics();
             initFacebookPixel();
             setTimeout(() => {
                 trackPageEvents();
             }, 100);
         } else if (consent === null) {
-            console.log('❓ No consent decision yet, showing banner...');
+            logInfo('❓ No consent decision yet, showing banner...');
             initCookieConsent();
         } else {
-            console.log('❌ User has not consented to marketing tracking');
+            logInfo('❌ User has not consented to marketing tracking');
         }
     }
     
