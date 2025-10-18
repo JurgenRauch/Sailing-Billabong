@@ -9,6 +9,34 @@ let siteData = {
     currentLang: 'en'
 };
 
+// Dev-only logging helper
+const __isDevEnv = (location && (location.hostname === 'localhost' || location.hostname === '127.0.0.1')) || location.protocol === 'file:';
+function devLog() {
+    if (__isDevEnv) {
+        // eslint-disable-next-line no-console
+        console.log.apply(console, arguments);
+    }
+}
+
+// Lightweight global debug helpers
+function sbIsDebugEnabled() {
+    try {
+        if (typeof window.SB_DEBUG_ENABLED === 'boolean') return window.SB_DEBUG_ENABLED;
+        if (siteData && siteData.config && siteData.config.tracking && typeof siteData.config.tracking.debug === 'boolean') {
+            return !!siteData.config.tracking.debug;
+        }
+        const params = new URLSearchParams(window.location.search);
+        const urlFlag = params.get('debug') || params.get('sb_debug');
+        const storeFlag = localStorage.getItem('sb_debug');
+        const normalize = (v) => typeof v === 'string' && /^(1|true|yes)$/i.test(v.trim());
+        return normalize(urlFlag) || normalize(storeFlag);
+    } catch (_) {
+        return false;
+    }
+}
+function sbLog() { if (sbIsDebugEnabled()) console.log.apply(console, arguments); }
+function sbInfo() { if (sbIsDebugEnabled()) console.info.apply(console, arguments); }
+
 // Load all centralized JSON files and includes
 async function loadIncludes() {
     try {
@@ -363,11 +391,11 @@ function initLinkableHeaders() {
                     showLinkCopiedNotification(header);
                 }).catch(() => {
                     // Fallback: just update URL
-                    console.log('Link copied to URL bar');
+                    sbLog('Link copied to URL bar');
                 });
             } else {
                 // Fallback for older browsers
-                console.log('Link available in URL bar');
+                sbLog('Link available in URL bar');
             }
         });
         
@@ -636,17 +664,17 @@ function scrollToNextSection() {
 
 // Blog functionality
 function initializeBlog() {
-    console.log('Initializing blog...', siteData.blog);
+    sbLog('Initializing blog...', siteData.blog);
     
     // Populate blog page if we're on it
     if (document.getElementById('blog-grid')) {
-        console.log('Found blog-grid, populating blog page...');
+        sbLog('Found blog-grid, populating blog page...');
         populateBlogPage();
     }
     
     // Populate latest posts on homepage
     if (document.getElementById('latest-posts-grid')) {
-        console.log('Found latest-posts-grid, populating latest posts...');
+        sbLog('Found latest-posts-grid, populating latest posts...');
         populateLatestPosts();
     }
 }
@@ -666,7 +694,7 @@ function populateBlogPage() {
 
 // Populate latest posts section on homepage
 function populateLatestPosts() {
-    console.log('populateLatestPosts called', siteData.blog);
+    sbLog('populateLatestPosts called', siteData.blog);
     
     if (!siteData.blog || !siteData.blog.articles) {
         console.error('No blog data available');
@@ -680,17 +708,17 @@ function populateLatestPosts() {
     }
     
     const articles = siteData.blog.articles.filter(article => article.published);
-    console.log('Published articles:', articles);
+    sbLog('Published articles:', articles);
     
     // Sort articles by date (newest first) and take only 3
     const latestArticles = articles
         .sort((a, b) => new Date(b.creation_date) - new Date(a.creation_date))
         .slice(0, 3);
     
-    console.log('Latest articles to display:', latestArticles);
+    sbLog('Latest articles to display:', latestArticles);
     
     const html = latestArticles.map(article => createBlogCard(article, 'compact')).join('');
-    console.log('Generated HTML:', html);
+    sbLog('Generated HTML:', html);
     
     latestPostsGrid.innerHTML = html;
 }

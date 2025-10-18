@@ -7,7 +7,7 @@ function initImageCarousel() {
     
     if (dots.length === 0 || slides.length === 0) return;
     
-    console.log('Carousel initialized with', slides.length, 'slides');
+    if (typeof sbLog === 'function') sbLog('Carousel initialized with', slides.length, 'slides');
     
     // Function to show specific slide
     function showSlide(index) {
