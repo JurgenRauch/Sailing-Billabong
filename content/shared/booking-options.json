@@ -3,7 +3,6 @@
     { "label": "Period 1", "available": true },
     { "label": "Period 2", "available": true },
     { "label": "Period 3", "available": false }
-  ],
-  "updatedAt": "2025-10-18"
+  ]
 }
 
