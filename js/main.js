@@ -67,12 +67,17 @@ function populateHeaderData() {
     if (!siteData.navigation || !siteData.navigation[siteData.currentLang]) return;
     
     const navData = siteData.navigation[siteData.currentLang];
+    const isFile = window.location.protocol === 'file:';
+    const resolveUrl = (url) => {
+        if (!isFile) return url;
+        return toRelativeFileUrl(url);
+    };
     
     // Update logo link based on current language
     const logoContainer = document.querySelector('.logo-container');
     if (logoContainer) {
-        // Use clean, absolute URLs for language-specific home
-        logoContainer.href = siteData.currentLang === 'hu' ? '/hu/' : '/';
+        // Clean URLs on http(s), relative on file://
+        logoContainer.href = siteData.currentLang === 'hu' ? (isFile ? 'hu/' : '/hu/') : (isFile ? 'index.html' : '/');
     }
     
     // Update main navigation
@@ -93,7 +98,7 @@ function populateHeaderData() {
                 dropdownContainer.className = 'nav-dropdown';
                 
                 const mainLink = document.createElement('a');
-                mainLink.href = item.url;
+                mainLink.href = resolveUrl(item.url);
                 mainLink.id = `nav-${item.id}`;
                 mainLink.textContent = item.label;
                 mainLink.className = 'nav-dropdown-toggle';
@@ -103,7 +108,7 @@ function populateHeaderData() {
                 
                 item.dropdown.forEach(dropdownItem => {
                     const dropdownLink = document.createElement('a');
-                    dropdownLink.href = dropdownItem.url;
+                    dropdownLink.href = resolveUrl(dropdownItem.url);
                     dropdownLink.textContent = dropdownItem.label;
                     dropdownMenu.appendChild(dropdownLink);
                 });
@@ -117,7 +122,7 @@ function populateHeaderData() {
                 navContainer.className = 'nav-dropdown';
                 
                 const desktopLink = document.createElement('a');
-                desktopLink.href = item.url;
+                desktopLink.href = resolveUrl(item.url);
                 desktopLink.id = `nav-${item.id}`;
                 desktopLink.textContent = item.label;
                 desktopLink.className = 'nav-dropdown-toggle';
@@ -128,7 +133,7 @@ function populateHeaderData() {
             
             // Mobile navigation (simplified - no dropdown for mobile)
             const mobileLink = document.createElement('a');
-            mobileLink.href = item.url;
+            mobileLink.href = resolveUrl(item.url);
             mobileLink.id = `mobile-nav-${item.id}`;
             mobileLink.textContent = item.label;
             mobileNav.appendChild(mobileLink);
@@ -222,6 +227,7 @@ function initializeAfterLoad() {
     initLinkableHeaders();
     setActiveNavItem();
     setCurrentLanguage();
+    normalizeLinksForEnvironment();
 }
 
 // Header scroll effect
@@ -281,16 +287,28 @@ function initLanguageSwitcher() {
 
 // Switch language function
 function switchLanguage(lang) {
-    // Toggle language by adding/removing '/hu' prefix while preserving the path tail
-    const path = window.location.pathname; // e.g., '/contact', '/hu/contact', '/', '/hu/'
-    const isHungarian = path.startsWith('/hu');
-    const tail = isHungarian ? path.replace(/^\/hu/, '') : path; // '/contact' or '/'
-
-    if (lang === 'hu' && !isHungarian) {
-        const target = tail === '/' ? '/hu/' : `/hu${tail}`;
+    const isFile = window.location.protocol === 'file:';
+    if (!isFile) {
+        // Clean URL behavior on http(s)
+        const path = window.location.pathname; // e.g., '/contact', '/hu/contact', '/', '/hu/'
+        const isHungarian = path.startsWith('/hu');
+        const tail = isHungarian ? path.replace(/^\/hu/, '') : path; // '/contact' or '/'
+        if (lang === 'hu' && !isHungarian) {
+            const target = tail === '/' ? '/hu/' : `/hu${tail}`;
+            window.location.href = target;
+        } else if (lang === 'en' && isHungarian) {
+            const target = tail || '/';
+            window.location.href = target;
+        }
+        return;
+    }
+    // File protocol: use relative .html routes
+    const pageSlug = getCurrentPageName(); // 'index', 'contact', etc.
+    if (lang === 'hu') {
+        const target = pageSlug === 'index' ? 'hu/index.html' : `hu/${pageSlug}.html`;
         window.location.href = target;
-    } else if (lang === 'en' && isHungarian) {
-        const target = tail || '/';
+    } else {
+        const target = pageSlug === 'index' ? 'index.html' : `${pageSlug}.html`;
         window.location.href = target;
     }
 }
@@ -433,11 +451,53 @@ function setActiveNavItem() {
 // Get current page name for active state matching
 function getCurrentPageName() {
     // Derive a logical page slug from the current path for active nav matching
-    const path = window.location.pathname; // '/blog', '/contact', '/', '/hu/tours'
+    const path = window.location.pathname; // '/blog', '/contact', '/', '/hu/tours' or file paths
+    const isFile = window.location.protocol === 'file:';
+    if (isFile) {
+        // For file://, infer from filename
+        const filename = path.split('/').pop() || 'index.html';
+        const name = filename.split('?')[0].split('#')[0];
+        return name.replace(/\.html$/i, '') || 'index';
+    }
     const withoutLang = path.replace(/^\/hu\/?/, '/');
     if (withoutLang === '/' || withoutLang === '') return 'index';
     const segments = withoutLang.split('/').filter(Boolean);
     return segments[0]; // first segment as page id (e.g., 'contact')
+}
+// Normalize internal links to work when opening files directly (file://)
+function normalizeLinksForEnvironment() {
+    if (window.location.protocol !== 'file:') return;
+    const anchors = document.querySelectorAll('a[href]');
+    anchors.forEach(a => {
+        const href = a.getAttribute('href');
+        const normalized = toRelativeFileUrl(href);
+        a.setAttribute('href', normalized);
+    });
+}
+
+// Convert clean/absolute internal links to relative .html for file:// usage
+function toRelativeFileUrl(url) {
+    if (!url) return url;
+    // Leave externals and anchors unchanged
+    if (/^(https?:)?\/\//i.test(url) || url.startsWith('mailto:') || url.startsWith('tel:') || url.startsWith('#')) {
+        return url;
+    }
+    // Split off hash and query
+    const [baseAndQuery, hash] = url.split('#');
+    const [base, query] = baseAndQuery.split('?');
+    let path = base;
+    // Remove leading slash for relative
+    if (path.startsWith('/')) path = path.slice(1);
+    if (path === '') path = 'index.html';
+    if (path.endsWith('/')) path += 'index.html';
+    // Add .html if missing an extension
+    const last = path.split('/').pop();
+    if (last && !/\.[a-z0-9]+$/i.test(last)) {
+        path += '.html';
+    }
+    const q = query ? `?${query}` : '';
+    const h = hash ? `#${hash}` : '';
+    return `${path}${q}${h}`;
 }
 
 // Set current language button as active
@@ -460,17 +520,22 @@ function setCurrentLanguage() {
 
 // Update language button links based on current page
 function updateLanguageLinks() {
-    const path = window.location.pathname; // absolute path
-    const isHungarian = path.startsWith('/hu');
-    const tail = isHungarian ? path.replace(/^\/hu/, '') : path;
-    
     const enBtn = document.getElementById('lang-en');
     const huBtn = document.getElementById('lang-hu');
-    
-    if (enBtn && huBtn) {
+    if (!enBtn || !huBtn) return;
+    const isFile = window.location.protocol === 'file:';
+    if (!isFile) {
+        const path = window.location.pathname; // absolute path
+        const isHungarian = path.startsWith('/hu');
+        const tail = isHungarian ? path.replace(/^\/hu/, '') : path;
         enBtn.href = isHungarian ? (tail || '/') : (path || '/');
         huBtn.href = isHungarian ? (path || '/hu/') : (tail === '/' ? '/hu/' : `/hu${tail}`);
+        return;
     }
+    // file:// links with .html
+    const slug = getCurrentPageName();
+    enBtn.href = slug === 'index' ? 'index.html' : `${slug}.html`;
+    huBtn.href = slug === 'index' ? 'hu/index.html' : `hu/${slug}.html`;
 }
 
 // Initialize all functions when DOM is loaded

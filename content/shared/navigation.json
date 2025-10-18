@@ -22,30 +22,6 @@
             "url": "/contact"
           }
         ]
-      },
-      {
-        "id": "about",
-        "label": "Billabong",
-        "url": "/about",
-        "active_pages": ["about", "tours", "gallery", "blog"],
-        "dropdown": [
-          {
-            "label": "About Us",
-            "url": "/about"
-          },
-          {
-            "label": "Tours",
-            "url": "/tours"
-          },
-          {
-            "label": "Gallery",
-            "url": "/gallery"
-          },
-          {
-            "label": "Blog",
-            "url": "/blog"
-          }
-        ]
       }
     ],
     "footer_nav": [
@@ -84,30 +60,6 @@
           {
             "label": "Foglalás",
             "url": "/hu/contact"
-          }
-        ]
-      },
-      {
-        "id": "about",
-        "label": "Billabong",
-        "url": "/hu/about",
-        "active_pages": ["about", "tours", "gallery", "blog"],
-        "dropdown": [
-          {
-            "label": "Rólunk",
-            "url": "/hu/about"
-          },
-          {
-            "label": "Túrák",
-            "url": "/hu/tours"
-          },
-          {
-            "label": "Galéria",
-            "url": "/hu/gallery"
-          },
-          {
-            "label": "Blog",
-            "url": "/hu/blog"
           }
         ]
       }
