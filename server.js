@@ -4,8 +4,31 @@ const path = require('path');
 
 const server = http.createServer((req, res) => {
     let filePath = '.' + req.url;
-    if (filePath === './') {
+
+    // Normalize URL (strip query/hash for filesystem lookup)
+    const urlPath = filePath.split('?')[0].split('#')[0];
+
+    // Map directories and extensionless routes to corresponding .html files
+    if (urlPath === './' || urlPath === '.' || urlPath === '') {
         filePath = './index.html';
+    } else {
+        const ext = path.extname(urlPath).toLowerCase();
+        if (!ext) {
+            // Attempt to serve `[path].html` (e.g., /contact -> contact.html)
+            const htmlCandidate = urlPath.replace(/^\./, './') + '.html';
+            const dirIndexCandidate = path.join(urlPath.replace(/^\./, './'), 'index.html');
+
+            if (fs.existsSync(htmlCandidate)) {
+                filePath = htmlCandidate;
+            } else if (fs.existsSync(dirIndexCandidate)) {
+                filePath = dirIndexCandidate;
+            } else {
+                // Fallback to original urlPath (will 404 below if not found)
+                filePath = urlPath;
+            }
+        } else {
+            filePath = urlPath;
+        }
     }
 
     const extname = String(path.extname(filePath)).toLowerCase();

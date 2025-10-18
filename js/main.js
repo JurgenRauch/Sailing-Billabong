@@ -71,11 +71,8 @@ function populateHeaderData() {
     // Update logo link based on current language
     const logoContainer = document.querySelector('.logo-container');
     if (logoContainer) {
-        if (siteData.currentLang === 'hu') {
-            logoContainer.href = '../index.html'; // Go back to root from /hu/ directory
-        } else {
-            logoContainer.href = 'index.html'; // Stay in root directory
-        }
+        // Use clean, absolute URLs for language-specific home
+        logoContainer.href = siteData.currentLang === 'hu' ? '/hu/' : '/';
     }
     
     // Update main navigation
@@ -284,16 +281,17 @@ function initLanguageSwitcher() {
 
 // Switch language function
 function switchLanguage(lang) {
-    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-    const isHungarian = window.location.pathname.includes('/hu/');
-    
+    // Toggle language by adding/removing '/hu' prefix while preserving the path tail
+    const path = window.location.pathname; // e.g., '/contact', '/hu/contact', '/', '/hu/'
+    const isHungarian = path.startsWith('/hu');
+    const tail = isHungarian ? path.replace(/^\/hu/, '') : path; // '/contact' or '/'
+
     if (lang === 'hu' && !isHungarian) {
-        // Switch to Hungarian
-        window.location.href = `/hu/${currentPage}`;
+        const target = tail === '/' ? '/hu/' : `/hu${tail}`;
+        window.location.href = target;
     } else if (lang === 'en' && isHungarian) {
-        // Switch to English
-        const englishPath = currentPage === 'index.html' ? '/' : `/${currentPage}`;
-        window.location.href = englishPath;
+        const target = tail || '/';
+        window.location.href = target;
     }
 }
 
@@ -434,16 +432,12 @@ function setActiveNavItem() {
 
 // Get current page name for active state matching
 function getCurrentPageName() {
-    const path = window.location.pathname;
-    const filename = path.split('/').pop();
-    
-    // Handle different cases
-    if (!filename || filename === '' || filename === '/') {
-        return 'index.html';
-    }
-    
-    // Remove query parameters and hash
-    return filename.split('?')[0].split('#')[0];
+    // Derive a logical page slug from the current path for active nav matching
+    const path = window.location.pathname; // '/blog', '/contact', '/', '/hu/tours'
+    const withoutLang = path.replace(/^\/hu\/?/, '/');
+    if (withoutLang === '/' || withoutLang === '') return 'index';
+    const segments = withoutLang.split('/').filter(Boolean);
+    return segments[0]; // first segment as page id (e.g., 'contact')
 }
 
 // Set current language button as active
@@ -466,22 +460,16 @@ function setCurrentLanguage() {
 
 // Update language button links based on current page
 function updateLanguageLinks() {
-    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-    const isHungarian = window.location.pathname.includes('/hu/');
+    const path = window.location.pathname; // absolute path
+    const isHungarian = path.startsWith('/hu');
+    const tail = isHungarian ? path.replace(/^\/hu/, '') : path;
     
     const enBtn = document.getElementById('lang-en');
     const huBtn = document.getElementById('lang-hu');
     
     if (enBtn && huBtn) {
-        if (isHungarian) {
-            // Currently on Hungarian page, EN should go to English version
-            enBtn.href = `../${currentPage}`;
-            huBtn.href = currentPage;
-        } else {
-            // Currently on English page, HU should go to Hungarian version
-            enBtn.href = currentPage;
-            huBtn.href = `hu/${currentPage}`;
-        }
+        enBtn.href = isHungarian ? (tail || '/') : (path || '/');
+        huBtn.href = isHungarian ? (path || '/hu/') : (tail === '/' ? '/hu/' : `/hu${tail}`);
     }
 }
 

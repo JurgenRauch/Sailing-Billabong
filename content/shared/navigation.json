@@ -4,67 +4,55 @@
       {
         "id": "home",
         "label": "Home",
-        "url": "index.html",
-        "active_pages": ["index.html", ""]
+        "url": "/",
+        "active_pages": ["index"]
       },
       {
         "id": "booking",
         "label": "Booking",
-        "url": "contact.html",
-        "active_pages": ["contact.html"],
+        "url": "/contact",
+        "active_pages": ["contact"],
         "dropdown": [
           {
             "label": "Contact",
-            "url": "contact.html"
+            "url": "/contact"
           },
           {
             "label": "Booking",
-            "url": "contact.html"
+            "url": "/contact"
           }
         ]
       },
       {
         "id": "about",
         "label": "Billabong",
-        "url": "about.html",
-        "active_pages": ["about.html", "tours.html", "gallery.html", "blog.html"],
+        "url": "/about",
+        "active_pages": ["about", "tours", "gallery", "blog"],
         "dropdown": [
           {
             "label": "About Us",
-            "url": "about.html"
+            "url": "/about"
           },
           {
             "label": "Tours",
-            "url": "tours.html"
+            "url": "/tours"
           },
           {
             "label": "Gallery",
-            "url": "gallery.html"
+            "url": "/gallery"
           },
           {
             "label": "Blog",
-            "url": "blog.html"
+            "url": "/blog"
           }
         ]
       }
     ],
     "footer_nav": [
-      {
-        "label": "About",
-        "url": "about.html"
-      },
-      {
-        "label": "Tours",
-        "url": "tours.html"
-      },
-      {
-        "label": "Contact",
-        "url": "contact.html"
-      },
-      {
-        "label": "Privacy",
-        "url": "privacy-policy.html"
-      }
+      { "label": "About", "url": "/about" },
+      { "label": "Tours", "url": "/tours" },
+      { "label": "Contact", "url": "/contact" },
+      { "label": "Privacy", "url": "/privacy-policy" }
     ],
     "language_switcher": {
       "current": "EN",
@@ -80,67 +68,55 @@
       {
         "id": "home",
         "label": "Főoldal",
-        "url": "index.html",
-        "active_pages": ["index.html", ""]
+        "url": "/hu/",
+        "active_pages": ["index"]
       },
       {
         "id": "booking",
         "label": "Foglalás",
-        "url": "contact.html",
-        "active_pages": ["contact.html"],
+        "url": "/hu/contact",
+        "active_pages": ["contact"],
         "dropdown": [
           {
             "label": "Kapcsolat",
-            "url": "contact.html"
+            "url": "/hu/contact"
           },
           {
             "label": "Foglalás",
-            "url": "contact.html"
+            "url": "/hu/contact"
           }
         ]
       },
       {
         "id": "about",
         "label": "Billabong",
-        "url": "about.html",
-        "active_pages": ["about.html", "tours.html", "gallery.html", "blog.html"],
+        "url": "/hu/about",
+        "active_pages": ["about", "tours", "gallery", "blog"],
         "dropdown": [
           {
             "label": "Rólunk",
-            "url": "about.html"
+            "url": "/hu/about"
           },
           {
             "label": "Túrák",
-            "url": "tours.html"
+            "url": "/hu/tours"
           },
           {
             "label": "Galéria",
-            "url": "gallery.html"
+            "url": "/hu/gallery"
           },
           {
             "label": "Blog",
-            "url": "blog.html"
+            "url": "/hu/blog"
           }
         ]
       }
     ],
     "footer_nav": [
-      {
-        "label": "Rólunk",
-        "url": "about.html"
-      },
-      {
-        "label": "Túrák",
-        "url": "tours.html"
-      },
-      {
-        "label": "Kapcsolat",
-        "url": "contact.html"
-      },
-      {
-        "label": "Adatvédelem",
-        "url": "privacy-policy.html"
-      }
+      { "label": "Rólunk", "url": "/hu/about" },
+      { "label": "Túrák", "url": "/hu/tours" },
+      { "label": "Kapcsolat", "url": "/hu/contact" },
+      { "label": "Adatvédelem", "url": "/hu/privacy-policy" }
     ],
     "language_switcher": {
       "current": "HU",
