@@ -225,7 +225,6 @@ function initializeAfterLoad() {
     initLinkableHeaders();
     setActiveNavItem();
     setCurrentLanguage();
-    initializeEmailJS(); // Initialize EmailJS functionality
 }
 
 // Header scroll effect
@@ -552,103 +551,7 @@ function getSocialLinks() {
     return siteData.contact ? siteData.contact.social : null;
 }
 
-// EmailJS functionality
-function initializeEmailJS() {
-    // Check if EmailJS is available and config exists
-    if (typeof emailjs !== 'undefined' && siteData.config && siteData.config.emailjs) {
-        try {
-            emailjs.init(siteData.config.emailjs.public_key);
-            
-            // Set up contact form handler
-            const contactForm = document.getElementById('contact-form');
-            if (contactForm) {
-                contactForm.addEventListener('submit', handleContactFormSubmit);
-            }
-            console.log('EmailJS initialized successfully');
-        } catch (error) {
-            console.warn('EmailJS initialization failed:', error);
-        }
-    } else {
-        console.log('EmailJS not available or not configured');
-    }
-}
-
-// Handle contact form submission
-async function handleContactFormSubmit(event) {
-    event.preventDefault();
-    
-    const form = event.target;
-    const submitBtn = document.getElementById('submit-btn');
-    const statusDiv = document.getElementById('form-status');
-    
-    // Check if EmailJS is available
-    if (typeof emailjs === 'undefined') {
-        showFormStatus('error', 'Email service not available. Please contact us directly.');
-        return;
-    }
-    
-    // Disable submit button and show loading state
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'Sending...';
-    
-    try {
-        // Get form data
-        const formData = new FormData(form);
-        
-        // Prepare template parameters with website variable
-        const templateParams = {
-            from_name: formData.get('from_name'),
-            from_email: formData.get('from_email'),
-            subject: formData.get('subject') || 'Contact Form Submission',
-            message: formData.get('message'),
-            website: siteData.config.emailjs.website_name || 'Sailing Billabong', // Automatically filled website variable
-            to_email: siteData.contact.contact.email
-        };
-        
-        // Send email using EmailJS
-        const response = await emailjs.send(
-            siteData.config.emailjs.service_id,
-            siteData.config.emailjs.template_id,
-            templateParams
-        );
-        
-        // Show success message
-        showFormStatus('success', 'Message sent successfully! We\'ll get back to you soon.');
-        form.reset();
-        
-    } catch (error) {
-        console.error('EmailJS Error:', error);
-        showFormStatus('error', 'Failed to send message. Please try again or contact us directly.');
-    } finally {
-        // Re-enable submit button
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Send Message';
-    }
-}
-
-// Show form status message
-function showFormStatus(type, message) {
-    const statusDiv = document.getElementById('form-status');
-    if (!statusDiv) return;
-    
-    statusDiv.style.display = 'block';
-    statusDiv.textContent = message;
-    
-    if (type === 'success') {
-        statusDiv.style.backgroundColor = '#d4edda';
-        statusDiv.style.color = '#155724';
-        statusDiv.style.border = '1px solid #c3e6cb';
-    } else if (type === 'error') {
-        statusDiv.style.backgroundColor = '#f8d7da';
-        statusDiv.style.color = '#721c24';
-        statusDiv.style.border = '1px solid #f5c6cb';
-    }
-    
-    // Hide status message after 5 seconds
-    setTimeout(() => {
-        statusDiv.style.display = 'none';
-    }, 5000);
-}
+// Email/contact form utilities moved to js/contact-form.js
 
 // Utility function to get site configuration
 function getSiteConfig() {
