@@ -5,7 +5,7 @@
     // Initialize EmailJS (once) when config is available
     async function ensureEmailReady(retries = 40, delayMs = 250) {
         for (let attempt = 0; attempt < retries; attempt++) {
-            if (window.siteData && siteData.config && siteData.config.emailjs && typeof emailjs !== 'undefined') {
+            if (typeof siteData !== 'undefined' && siteData.config && siteData.config.emailjs && typeof emailjs !== 'undefined') {
                 if (!emailInitialized) {
                     try {
                         emailjs.init(siteData.config.emailjs.public_key);
