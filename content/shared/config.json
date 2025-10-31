@@ -16,7 +16,8 @@
   "tracking": {
     "google_analytics": "GA_ID_HERE",
     "facebook_pixel": "3273896666096789",
-    "gtag_config": "GA_MEASUREMENT_ID_HERE"
+    "gtag_config": "GA_MEASUREMENT_ID_HERE",
+    "privacy_mode": "consent_only"
   },
   "seo": {
     "default_image": "images/hero/homepage2k.png",

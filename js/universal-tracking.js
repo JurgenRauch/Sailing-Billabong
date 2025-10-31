@@ -8,6 +8,7 @@
     let FACEBOOK_PIXEL_ID = 'YOUR_PIXEL_ID_HERE'; // Fallback value
     let GOOGLE_ANALYTICS_ID = 'G-XXXXXXXXXX'; // Fallback value
     let DEBUG_TRACKING = false; // Suppress logs unless explicitly enabled
+    let PRIVACY_MODE = 'strict'; // 'strict' | 'consent_only'
     
     // Update tracking IDs from centralized config if available
     function updateTrackingIds() {
@@ -21,6 +22,12 @@
             }
             if (typeof tracking.debug === 'boolean') {
                 DEBUG_TRACKING = tracking.debug;
+            }
+            if (typeof tracking.privacy_mode === 'string') {
+                const mode = String(tracking.privacy_mode).toLowerCase();
+                if (mode === 'consent_only' || mode === 'strict') {
+                    PRIVACY_MODE = mode;
+                }
             }
         }
     }
@@ -53,9 +60,24 @@
     function trackingAllowed() {
         const consent = getCookieConsent();
         const marketingConsent = consent && typeof consent === 'object' && !!consent.marketing;
-        if (!marketingConsent) return false;
-        if (debugNoTrackEnabled()) return false;
-        if (hasDoNotTrack() || hasGlobalPrivacyControl()) return false;
+        if (!marketingConsent) {
+            logInfo('[Tracking] Blocked: no marketing consent');
+            return false;
+        }
+        if (debugNoTrackEnabled()) {
+            logInfo('[Tracking] Blocked: developer no_track flag enabled');
+            return false;
+        }
+        // Honor GPC in all modes
+        if (hasGlobalPrivacyControl()) {
+            logInfo('[Tracking] Blocked: Global Privacy Control is enabled');
+            return false;
+        }
+        // Honor DNT only in strict mode
+        if (PRIVACY_MODE !== 'consent_only' && hasDoNotTrack()) {
+            logInfo('[Tracking] Blocked: Do Not Track is enabled (strict mode)');
+            return false;
+        }
         return true;
     }
     const SCRIPT_BASE_PATH = getScriptBasePath();
