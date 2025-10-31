@@ -101,6 +101,15 @@
                     <li><strong>Opt-out tools:</strong> Google Analytics opt-out browser add-on</li>
                 </ul>
 
+                <h3 style="margin-top: 2rem;">Cookie Settings</h3>
+                <p>You can update your cookie preferences anytime using the options below.</p>
+                <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1rem 0 2rem;">
+                    <button id="pp-accept-all" class="cta-btn">Accept all</button>
+                    <button id="pp-open-settings" class="cta-btn secondary">Settings</button>
+                    <button id="pp-reject-marketing" class="cta-btn" style="background: var(--grey-light); color: var(--text-body); border: 2px solid var(--grey-medium);">Reject marketing</button>
+                </div>
+                <div id="pp-consent-status" class="text-muted" style="font-size: 0.9rem;"></div>
+
                 <h2>4. Data Sharing and Third Parties</h2>
                 <p>We may share your information with:</p>
                 <ul>
@@ -175,5 +184,41 @@
     <script src="js/favicon.js"></script>
     <script src="js/main.js"></script>
     <script src="js/universal-tracking.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        function updateStatus() {
+            try {
+                var consent = window.SailingBillabongTracking && window.SailingBillabongTracking.getCookieConsent && window.SailingBillabongTracking.getCookieConsent();
+                var el = document.getElementById('pp-consent-status');
+                if (el) {
+                    var status = consent && consent.marketing ? 'Marketing cookies: enabled' : 'Marketing cookies: disabled';
+                    el.textContent = status;
+                }
+            } catch (_) {}
+        }
+        var acceptBtn = document.getElementById('pp-accept-all');
+        if (acceptBtn) acceptBtn.addEventListener('click', function() {
+            if (window.SailingBillabongTracking && window.SailingBillabongTracking.setCookieConsent) {
+                window.SailingBillabongTracking.setCookieConsent({ necessary: true, marketing: true });
+                location.reload();
+            }
+        });
+        var rejectBtn = document.getElementById('pp-reject-marketing');
+        if (rejectBtn) rejectBtn.addEventListener('click', function() {
+            if (window.SailingBillabongTracking && window.SailingBillabongTracking.setCookieConsent) {
+                window.SailingBillabongTracking.setCookieConsent({ necessary: true, marketing: false });
+                location.reload();
+            }
+        });
+        var settingsBtn = document.getElementById('pp-open-settings');
+        if (settingsBtn) settingsBtn.addEventListener('click', function() {
+            if (window.SailingBillabongTracking && window.SailingBillabongTracking.showCookieSettings) {
+                window.SailingBillabongTracking.showCookieSettings();
+                setTimeout(updateStatus, 500);
+            }
+        });
+        updateStatus();
+    });
+    </script>
 </body>
 </html>

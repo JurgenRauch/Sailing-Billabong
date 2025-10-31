@@ -578,7 +578,7 @@
                         <p>This website uses cookies to improve user experience and for marketing data collection. By continuing, you accept the use of cookies. <a href="privacy-policy.html" style="color: var(--navy-primary); text-decoration: underline;">Learn more</a></p>
                     </div>
                     <div class="cookie-consent-buttons">
-                        <button id="cookie-accept" class="btn btn-primary">Understood</button>
+                        <button id="cookie-accept" class="btn btn-primary">Accept</button>
                         <button id="cookie-settings" class="btn btn-secondary">Settings</button>
                     </div>
                 </div>
@@ -785,6 +785,8 @@
         initFacebookPixel,
         trackPageEvents,
         getCookieConsent,
-        setCookieConsent
+        setCookieConsent,
+        // Expose cookie settings UI for privacy policy page
+        showCookieSettings
     };
 })();
