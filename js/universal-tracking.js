@@ -12,8 +12,15 @@
     
     // Update tracking IDs from centralized config if available
     function updateTrackingIds() {
-        if (window.siteData && window.siteData.config && window.siteData.config.tracking) {
-            const tracking = window.siteData.config.tracking;
+        // Support configs stored either on window.siteData or module-scoped siteData
+        let config = null;
+        try {
+            if (window.siteData && window.siteData.config) config = window.siteData.config;
+            // eslint-disable-next-line no-undef
+            if (!config && typeof siteData !== 'undefined' && siteData && siteData.config) config = siteData.config;
+        } catch (_) { /* no-op */ }
+        if (config && config.tracking) {
+            const tracking = config.tracking;
             if (tracking.gtag_config && tracking.gtag_config !== 'GA_MEASUREMENT_ID_HERE') {
                 GOOGLE_ANALYTICS_ID = tracking.gtag_config;
             }
@@ -748,7 +755,15 @@
     function startWhenReady() {
         // If config is already present, start immediately
         updateTrackingIds();
-        if (window.siteData && window.siteData.config && window.siteData.config.tracking) {
+        const hasConfig = (function() {
+            try {
+                if (window.siteData && window.siteData.config && window.siteData.config.tracking) return true;
+                // eslint-disable-next-line no-undef
+                if (typeof siteData !== 'undefined' && siteData && siteData.config && siteData.config.tracking) return true;
+            } catch (_) {}
+            return false;
+        })();
+        if (hasConfig) {
             init();
             return;
         }
